@@ -77,14 +77,17 @@ function buildServicesPageCards() {
   }).join("");
 }
 
+function buildProjectTicker() {
+  return I18N.fr.projects.map((p) => p.title.toUpperCase()).join("&nbsp;&nbsp;&nbsp;◈&nbsp;&nbsp;&nbsp;") + "&nbsp;&nbsp;&nbsp;◈&nbsp;&nbsp;&nbsp;";
+}
+
 function buildHomeProjectCards() {
   const stage = document.getElementById("proj-stage");
   if (!stage) return;
-  stage.innerHTML = PROJECTS.map((p, i) => {
+  const cardsHtml = PROJECTS.map((p, i) => {
     const svcCount = I18N.fr.projects[i].services.length;
     return `
     <div class="proj-stacked-card" data-card-index="${i}">
-      <div class="proj-bg-title" data-i18n="projects.${i}.title"></div>
       <div class="proj-home-card">
         <span class="proj-tag" data-i18n="projects.${i}.tag"></span>
         <a class="proj-visit" href="${p.url}" target="_blank" rel="noopener noreferrer" data-i18n="visit"></a>
@@ -99,12 +102,13 @@ function buildHomeProjectCards() {
       </div>
     </div>`;
   }).join("");
+  stage.innerHTML = `<div class="stack-ticker" id="proj-ticker">${buildProjectTicker()}</div>` + cardsHtml;
 }
 
 function buildProjectsPageCards() {
   const stage = document.getElementById("projpage-stage");
   if (!stage) return;
-  stage.innerHTML = PROJECTS.map((p, i) => {
+  const cardsHtml = PROJECTS.map((p, i) => {
     const svcCount = I18N.fr.projects[i].services.length;
     return `
     <div class="projpage-card" data-card-index="${i}">
@@ -122,6 +126,7 @@ function buildProjectsPageCards() {
       </div>
     </div>`;
   }).join("");
+  stage.innerHTML = `<div class="stack-ticker" id="projpage-ticker">${buildProjectTicker()}</div>` + cardsHtml;
 }
 
 /* ---------- i18n ---------- */
@@ -238,16 +243,23 @@ function cardPhase(local) {
   return { opacity: 1 - p, rotateX: lerp(0, -80, p), translateY: lerp(0, -44, p) };
 }
 
-function createStackedReveal({ spacerId, stageId, cardSelector }) {
+function createStackedReveal({ spacerId, stageId, cardSelector, tickerId, pageKey }) {
   const spacer = document.getElementById(spacerId);
   const stage = document.getElementById(stageId);
   const cards = stage ? Array.from(stage.querySelectorAll(cardSelector)) : [];
+  const ticker = tickerId ? document.getElementById(tickerId) : null;
   if (!spacer || !stage || !cards.length) return null;
 
   const n = cards.length;
   const perCard = 1 / n;
+  let tickerWidth = 0;
 
   function update() {
+    if (pageKey && state.page !== pageKey) {
+      stage.classList.remove("is-visible");
+      return;
+    }
+
     const rect = spacer.getBoundingClientRect();
     const spacerH = spacer.offsetHeight;
     const viewH = window.innerHeight;
@@ -263,9 +275,15 @@ function createStackedReveal({ spacerId, stageId, cardSelector }) {
       const local = (progress - i * perCard) / perCard;
       const { opacity, rotateX, translateY } = cardPhase(local);
       card.style.opacity = opacity;
-      card.style.transform = `translateY(${translateY}px) rotateX(${rotateX}deg)`;
+      card.style.transform = `perspective(1200px) translateY(${translateY}px) rotateX(${rotateX}deg)`;
       card.style.zIndex = i + 1;
     });
+
+    if (ticker) {
+      if (!tickerWidth) tickerWidth = ticker.scrollWidth;
+      const maxShift = Math.max(tickerWidth - window.innerWidth, 0);
+      ticker.style.transform = `translateY(-50%) translateX(${-progress * maxShift}px)`;
+    }
   }
 
   return { update };
@@ -341,15 +359,21 @@ function scrambleText(el) {
   }, 400 / totalFrames);
 }
 
-function animateDisplacement(filterEl) {
-  const duration = 350;
+function animateDisplacement(card, filterEl) {
+  const duration = 420;
+  const peakScale = 35;
   const start = performance.now();
+  card.classList.add("is-glitching");
   function step(now) {
     const p = Math.min((now - start) / duration, 1);
-    const scale = p < 0.5 ? (p / 0.5) * 5 : (1 - (p - 0.5) / 0.5) * 5;
+    const scale = p < 0.5 ? (p / 0.5) * peakScale : (1 - (p - 0.5) / 0.5) * peakScale;
     filterEl.setAttribute("scale", scale.toFixed(2));
-    if (p < 1) requestAnimationFrame(step);
-    else filterEl.setAttribute("scale", "0");
+    if (p < 1) {
+      requestAnimationFrame(step);
+    } else {
+      filterEl.setAttribute("scale", "0");
+      card.classList.remove("is-glitching");
+    }
   }
   requestAnimationFrame(step);
 }
@@ -357,11 +381,10 @@ function animateDisplacement(filterEl) {
 function setupGlitch() {
   const filterEl = document.querySelector("#svc-glitch feDisplacementMap");
   document.querySelectorAll(".svc-card, .svc-page-card").forEach((card) => {
-    card.style.filter = "url(#svc-glitch)";
     const numEl = card.querySelector(".svc-num");
     function trigger() {
       if (numEl) scrambleText(numEl);
-      if (filterEl) animateDisplacement(filterEl);
+      if (filterEl) animateDisplacement(card, filterEl);
     }
     card.addEventListener("mouseenter", trigger);
     card.addEventListener("touchstart", trigger, { passive: true });
@@ -402,8 +425,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCardReveal();
   setupGlitch();
 
-  const homeReveal = createStackedReveal({ spacerId: "proj-scroll-spacer", stageId: "proj-stage", cardSelector: ".proj-stacked-card" });
-  const projectsReveal = createStackedReveal({ spacerId: "projpage-scroll-spacer", stageId: "projpage-stage", cardSelector: ".projpage-card" });
+  const homeReveal = createStackedReveal({ spacerId: "proj-scroll-spacer", stageId: "proj-stage", cardSelector: ".proj-stacked-card", tickerId: "proj-ticker", pageKey: "home" });
+  const projectsReveal = createStackedReveal({ spacerId: "projpage-scroll-spacer", stageId: "projpage-stage", cardSelector: ".projpage-card", tickerId: "projpage-ticker", pageKey: "projects" });
   stackedRevealModules = [homeReveal, projectsReveal].filter(Boolean);
 
   initNavScroll();

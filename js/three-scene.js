@@ -153,10 +153,13 @@ function initHeroScene() {
 
   function onMouseMove(e) {
     const rect = canvas3d.getBoundingClientRect();
-    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-    targetRotY = nx * 0.5;
-    targetRotX = ny * 0.3;
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const radius = 260;
+    const nx = Math.max(-1, Math.min(1, (e.clientX - cx) / radius));
+    const ny = Math.max(-1, Math.min(1, (e.clientY - cy) / radius));
+    targetRotY = nx * 0.7;
+    targetRotX = ny * 0.4;
   }
 
   function resizeThree() {

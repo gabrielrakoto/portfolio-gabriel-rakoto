@@ -530,6 +530,8 @@ h1, h2, h3, p { margin: 0; }
   position: relative;
 }
 .svc-card.scroll-visible { opacity: 1; transform: translateY(0); }
+.svc-card.is-glitching,
+.svc-page-card.is-glitching { filter: url(#svc-glitch); }
 .svc-visual {
   height: 120px;
   border-radius: 10px;
@@ -665,19 +667,20 @@ h1, h2, h3, p { margin: 0; }
   will-change: transform, opacity;
   opacity: 0;
 }
-.proj-bg-title {
+.stack-ticker {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  white-space: nowrap;
   font-family: var(--f-title);
   font-weight: 800;
   font-size: 20vw;
+  line-height: 1;
   color: var(--c-border);
-  white-space: nowrap;
   z-index: 0;
   user-select: none;
+  will-change: transform;
 }
 .proj-home-card {
   position: relative;

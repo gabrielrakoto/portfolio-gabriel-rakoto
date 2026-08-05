@@ -3,22 +3,22 @@
 const PROJECTS = [
   {
     id: "tbg",
-    img: "assets/tbg-paysagiste.png",
+    img: "assets/tbg-paysagiste.jpg",
     url: "https://tbg-paysagiste.vercel.app/",
   },
   {
     id: "kami",
-    img: "assets/kami-auto-garage.png",
+    img: "assets/kami-auto-garage.jpg",
     url: "https://kami-auto-garage.vercel.app/index.html",
   },
   {
     id: "lotus",
-    img: "assets/lotus-imperial.png",
+    img: "assets/lotus-imperial.jpg",
     url: "https://delice-de-manille.vercel.app/",
   },
   {
     id: "plomberie",
-    img: "assets/plomberie-pro.png",
+    img: "assets/plomberie-pro.jpg",
     url: "https://designhandoffplomberiepro.vercel.app/",
   },
 ];
