@@ -129,17 +129,18 @@ function initHeroScene() {
       (font) => {
         const geo = new THREE.TextGeometry("GR.", {
           font,
-          size: 16,
-          height: 4,
+          size: 9,
+          height: 2.6,
           curveSegments: 8,
           bevelEnabled: true,
-          bevelThickness: 0.6,
-          bevelSize: 0.4,
+          bevelThickness: 0.4,
+          bevelSize: 0.25,
           bevelSegments: 3,
         });
         geo.center();
         const mat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.88, roughness: 0.18 });
         textMesh = new THREE.Mesh(geo, mat);
+        textMesh.rotation.y = 1.1;
         scene.add(textMesh);
       }
     );
@@ -172,10 +173,10 @@ function initHeroScene() {
     if (textMesh) {
       if (autoRotate) {
         autoAngle += 0.003;
-        textMesh.rotation.y = Math.sin(autoAngle) * 0.25;
+        textMesh.rotation.y = 1.1 + Math.sin(autoAngle) * 0.35;
         textMesh.rotation.x = Math.cos(autoAngle * 0.7) * 0.08;
       } else {
-        textMesh.rotation.y += (targetRotY - textMesh.rotation.y) * 0.08;
+        textMesh.rotation.y += (1.1 + targetRotY - textMesh.rotation.y) * 0.08;
         textMesh.rotation.x += (targetRotX - textMesh.rotation.x) * 0.08;
       }
     }

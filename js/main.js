@@ -22,12 +22,30 @@ function getInitialLang() {
 }
 
 /* ---------- Construction des cartes dynamiques (une seule fois au boot) ---------- */
+const SVC_MOCKUPS = [
+  `<div class="mock-browser">
+     <div class="mock-browser-bar"><span></span><span></span><span></span></div>
+     <div class="mock-browser-body">
+       <div class="mock-line" style="width:60%"></div>
+       <div class="mock-line" style="width:85%"></div>
+       <div class="mock-line" style="width:70%"></div>
+     </div>
+   </div>`,
+  `<svg width="40" height="40" viewBox="0 0 24 24" fill="#111111"><path d="M12 2C7.6 2 4 5.6 4 10c0 6 8 12 8 12s8-6 8-12c0-4.4-3.6-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z"/></svg>`,
+  `<svg width="72" height="46" viewBox="0 0 100 60">
+     <polyline points="8,46 40,32 92,10" fill="none" stroke="#b0b0b0" stroke-width="1.5" stroke-dasharray="4 3"/>
+     <rect x="4" y="34" width="16" height="22" fill="#dadada"/>
+     <rect x="38" y="22" width="16" height="34" fill="#999999"/>
+     <rect x="72" y="8" width="16" height="48" fill="#111111"/>
+   </svg>`,
+];
+
 function buildHomeServiceCards() {
   const grid = document.getElementById("svc-grid-home");
   if (!grid) return;
   grid.innerHTML = SERVICES_META.map((meta, i) => `
     <div class="svc-card" style="--point-color:${meta.pointColor}">
-      <div class="svc-visual"><span style="font-size:32px;display:flex;align-items:center;justify-content:center;height:100%;">${meta.icon}</span></div>
+      <div class="svc-visual">${SVC_MOCKUPS[i] || ""}</div>
       <div class="svc-title"><span data-i18n="services.${i}.title"></span><i class="svc-blink">⌖</i></div>
       <div class="svc-num">${meta.num}</div>
       <p class="svc-desc" data-i18n="services.${i}.desc"></p>
@@ -47,7 +65,7 @@ function buildServicesPageCards() {
         <span class="svc-page-title" data-i18n="services.${i}.title"></span>
         <i class="svc-blink">⌖</i>
       </div>
-      <div style="color:var(--c-text-muted);font-size:12px;margin-bottom:12px;">${meta.num}</div>
+      <div class="svc-num" style="margin-bottom:12px;">${meta.num}</div>
       <p class="svc-page-desc" data-i18n="services.${i}.desc"></p>
       <hr class="svc-page-sep">
       <div class="svc-page-price" data-i18n="services.${i}.price"></div>
@@ -338,7 +356,7 @@ function animateDisplacement(filterEl) {
 
 function setupGlitch() {
   const filterEl = document.querySelector("#svc-glitch feDisplacementMap");
-  document.querySelectorAll(".svc-card").forEach((card) => {
+  document.querySelectorAll(".svc-card, .svc-page-card").forEach((card) => {
     card.style.filter = "url(#svc-glitch)";
     const numEl = card.querySelector(".svc-num");
     function trigger() {
