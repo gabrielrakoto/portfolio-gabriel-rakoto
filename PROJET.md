@@ -10,8 +10,11 @@ peut-u créer un repo git hub pour ce portofolio je m'occupe de le publier sur v
 
 - Repo GitHub créé : `portfolio-gabriel-rakoto`, public.
 - Déploiement initial prévu sur Vercel (géré par Gabriel) ; migration possible plus tard vers un VPS Hostinger avec nom de domaine propre — simple changement DNS, aucun risque.
-- Contenu actuel du repo : bundle de design handoff (`design_handoff_portfolio/`) — prototype HTML haute fidélité à recréer dans un vrai codebase (Next.js/React pressenti pour un site marketing statique).
+- Le premier `index.html` déployé était un export cassé d'un outil de design propriétaire (balises `<x-dc>`, syntaxe `{{ t.xxx }}` non interprétable par un navigateur) — affichait du texte brut non résolu en prod. Site entièrement reconstruit en HTML/CSS/JS vanilla statique fidèle au design d'origine (contenu, couleurs, typographie Syne/DM Sans, animations scroll-driven, scène 3D three.js du hero).
+- Formulaire de contact : reproduit à l'identique du prototype (affiche un état "envoyé" en JS, sans envoi réseau réel pour l'instant — à brancher plus tard sur un vrai service).
+- Images orphelines (`delice-de-manille.png`, `jmc-mecanique.png`) conservées dans `assets/` sans être utilisées (aucun projet correspondant affiché).
+- Poids des images projets (~1-2.8 Mo chacune) non optimisé pour l'instant — à convertir en WebP avant mise en prod pour un meilleur score de performance/SEO.
 
 ## Stack choisie
 
-_Pas encore confirmée — le handoff recommande Next.js/statique, à valider avant l'implémentation._
+HTML/CSS/JS vanilla statique — aucun framework, aucun build. Fichiers : `index.html`, `css/style.css`, `js/data.js` (données + i18n FR/EN), `js/three-scene.js` (scène 3D hero), `js/main.js` (état, navigation, i18n, animations). Déployable tel quel sur Vercel, compatible migration future vers un VPS Hostinger.
