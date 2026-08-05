@@ -78,7 +78,6 @@ function initHeroScene() {
   let textMesh = null;
   let particles = null;
   let threeRAF = null;
-  let autoRotate = true;
   let targetRotX = 0;
   let targetRotY = 0;
   let autoAngle = 0;
@@ -146,8 +145,7 @@ function initHeroScene() {
     );
 
     resizeThree();
-    canvas3d.addEventListener("mouseenter", () => { autoRotate = false; });
-    canvas3d.addEventListener("mouseleave", () => { autoRotate = true; });
+    canvas3d.addEventListener("mouseleave", () => { targetRotY = 0; targetRotX = 0; });
     canvas3d.addEventListener("mousemove", onMouseMove);
   }
 
@@ -158,8 +156,8 @@ function initHeroScene() {
     const radius = 260;
     const nx = Math.max(-1, Math.min(1, (e.clientX - cx) / radius));
     const ny = Math.max(-1, Math.min(1, (e.clientY - cy) / radius));
-    targetRotY = nx * 0.7;
-    targetRotX = ny * 0.4;
+    targetRotY = nx * 0.5;
+    targetRotX = ny * 0.3;
   }
 
   function resizeThree() {
@@ -174,14 +172,11 @@ function initHeroScene() {
   function animateThree() {
     threeRAF = requestAnimationFrame(animateThree);
     if (textMesh) {
-      if (autoRotate) {
-        autoAngle += 0.003;
-        textMesh.rotation.y = 1.1 + Math.sin(autoAngle) * 0.35;
-        textMesh.rotation.x = Math.cos(autoAngle * 0.7) * 0.08;
-      } else {
-        textMesh.rotation.y += (1.1 + targetRotY - textMesh.rotation.y) * 0.08;
-        textMesh.rotation.x += (targetRotX - textMesh.rotation.x) * 0.08;
-      }
+      autoAngle += 0.003;
+      const baseY = 1.1 + Math.sin(autoAngle) * 0.35;
+      const baseX = Math.cos(autoAngle * 0.7) * 0.08;
+      textMesh.rotation.y += (baseY + targetRotY - textMesh.rotation.y) * 0.08;
+      textMesh.rotation.x += (baseX + targetRotX - textMesh.rotation.x) * 0.08;
     }
     if (particles) particles.rotation.y += 0.0006;
     renderer.render(scene, camera);
