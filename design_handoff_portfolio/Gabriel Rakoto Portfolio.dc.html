@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&amp;family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&amp;display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #FFFFFF; overflow-x: clip; }
+    ::selection { background: #111111; color: #FFFFFF; }
+    button { border: none; background: none; cursor: pointer; font-family: inherit; }
+    input, textarea { font-family: inherit; outline: none; border: none; }
+    a { text-decoration: none; color: inherit; }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(70px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes badgeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes navIn {
+      from { opacity: 0; transform: translateY(-24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUpCenter {
+      from { opacity: 0; transform: translateY(calc(-50% + 40px)); }
+      to   { opacity: 1; transform: translateY(-50%); }
+    }
+    @keyframes fadeRight {
+      from { opacity: 0; transform: translateX(32px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pageIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.75); }
+    }
+    @keyframes scrollReveal {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .scroll-hidden {
+      opacity: 0;
+      transform: translateY(48px);
+    }
+    .scroll-visible {
+      animation: scrollReveal 0.7s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes svcBlink {
+      0%   { opacity: 1; }
+      100% { opacity: 0.35; }
+    }
+    @keyframes svcCursor {
+      0%,100% { opacity: 1; }
+      50%     { opacity: 0; }
+    }
+    @keyframes svcPulse {
+      0%   { r: 20; opacity: 0.55; }
+      100% { r: 46; opacity: 0; }
+    }
+    @keyframes svcBarA {
+      from { transform: scaleY(0); }
+      to   { transform: scaleY(1); }
+    }
+    @keyframes svcFloat {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-5px); }
+    }
+    @keyframes svcMarquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes svcReveal {
+      from { opacity: 0; transform: translateY(80px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes aboutPhoto {
+      from { opacity: 0; transform: translateX(-48px) rotate(-3deg); }
+      to   { opacity: 1; transform: translateX(0) rotate(0deg); }
+    }
+    @keyframes aboutText {
+      from { opacity: 0; transform: translateX(40px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes aboutStat {
+      from { opacity: 0; transform: translateY(24px) scaleY(0.7); }
+      to   { opacity: 1; transform: translateY(0) scaleY(1); }
+    }
+    @keyframes aboutPill {
+      from { opacity: 0; transform: scale(0.75); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .about-photo  { opacity: 0; }
+    .about-text   { opacity: 0; }
+    .about-stat   { opacity: 0; }
+    .about-pill   { opacity: 0; }
+    .about-photo.anim-in  { animation: aboutPhoto 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+    .about-text.anim-in   { animation: aboutText  0.8s cubic-bezier(0.16,1,0.3,1) both; }
+    .about-stat.anim-in   { animation: aboutStat  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+    .about-pill.anim-in   { animation: aboutPill  0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+    .proj-pill { font-family: 'DM Sans', sans-serif; font-size: 11px; color: #777; background: #F0F0F0; border: 1px solid #DADADA; padding: 4px 13px; border-radius: 100px; white-space: nowrap; }
+    .proj-pill-hot { color: #111111; background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.15); }
+    .proj-pill-dim { color: #444; background: #F5F5F5; border-color: #E5E5E5; }
+    .proj-scr { background: #EAEAEA; border-radius: 16px; overflow: hidden; }
+    .proj-card-3d { background: #F7F7F7; border-radius: 30px; position: relative; cursor: pointer; will-change: transform; }
+
+    @media (max-width: 820px) {
+      .hero-sec {
+        display: flex; flex-direction: column; align-items: flex-start;
+        gap: 28px; padding: 88px 20px 48px; min-height: 0;
+      }
+      .hero-sec .hero-badge,
+      .hero-sec .hero-title,
+      .hero-sec .hero-cta,
+      .hero-sec .hero-card,
+      .hero-sec #gr-canvas {
+        position: static !important; inset: auto !important;
+        top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+        transform: none !important;
+      }
+      .hero-sec .hero-badge { order: 1; }
+      .hero-sec .hero-title {
+        order: 2;
+        max-width: 100% !important; padding: 0 !important;
+        font-size: clamp(30px, 8.4vw, 44px) !important;
+      }
+      .hero-sec #gr-canvas {
+        order: 3;
+        width: min(62vw, 260px) !important; height: min(62vw, 260px) !important;
+        align-self: center; margin: -4px 0;
+      }
+      .hero-sec .hero-cta { order: 4; }
+      .hero-sec .hero-card {
+        order: 5;
+        align-items: flex-start !important; width: 100%;
+      }
+      .hero-sec .hero-card p {
+        text-align: left !important; max-width: 100% !important;
+      }
+      .proj-home-card { width: min(520px, 92vw) !important; }
+      .proj-home-card .proj-screen-bg {
+        height: auto !important; aspect-ratio: 16 / 10;
+        background-size: contain !important; background-repeat: no-repeat !important;
+      }
+      .proj-home-info { padding: 14px 16px 16px !important; }
+      .proj-home-info > div:nth-child(2) { font-size: 19px !important; margin-bottom: 12px !important; }
+
+      .projpage-card { max-height: 86vh !important; overflow-y: auto !important; }
+      .projpage-card-inner { gap: 18px !important; padding: 22px 20px 26px !important; }
+      .projpage-copy { gap: 12px !important; }
+      .projpage-copy h3 { font-size: 26px !important; }
+      .projpage-copy p { font-size: 14px !important; line-height: 1.6 !important; }
+      .projpage-card-inner > div:last-child { max-height: 30vh; flex: 0 1 auto !important; }
+
+      .svc-page-head h1 { font-size: 34px !important; white-space: normal !important; letter-spacing: -1px !important; }
+      .svc-page-head { margin-bottom: 32px !important; }
+      .svc-page-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
+      .svc-page-grid .svc-card {
+        border-left: none !important;
+        border-top: 1px solid #E5E5E5 !important;
+        padding: 26px 0 30px !important;
+      }
+      .svc-page-grid .svc-card:first-child { border-top: none !important; padding-top: 4px !important; }
+      .svc-page-grid .svc-title { font-size: 24px !important; min-height: 0 !important; margin-bottom: 8px !important; }
+      .svc-page-grid .svc-card > p { min-height: 0 !important; }
+      .svc-page-grid .svc-card > div:nth-of-type(1) { margin: 18px 0 !important; }
+      .svc-page-grid .svc-card ul { margin-bottom: 24px !important; gap: 12px !important; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .svc-card { transition: border-color 0.3s, background 0.3s; }
+      .svc-card .svc-icon { transition: color 0.22s cubic-bezier(0.25,1,0.5,1); }
+      .svc-card .svc-title { transition: color 0.22s cubic-bezier(0.25,1,0.5,1); }
+      .svc-card:hover .svc-icon,
+      .svc-card:active .svc-icon { color: #111111 !important; }
+      .svc-card:hover .svc-title,
+      .svc-card:active .svc-title { color: #111111 !important; }
+      .svc-card:hover,
+      .svc-card:active { border-color: #111111 !important; }
+      .svc-blink {
+        opacity: 0;
+        transform: translateX(-4px);
+        transition: opacity 0.18s ease, transform 0.18s ease;
+        display: inline-block;
+        color: #111111;
+        font-size: 0.75em;
+        margin-left: 8px;
+        vertical-align: middle;
+        font-style: normal;
+      }
+      .svc-card:hover .svc-blink,
+      .svc-card:active .svc-blink {
+        opacity: 1;
+        transform: translateX(0);
+        animation: svcBlink 0.11s steps(2, jump-none) 0.18s infinite alternate;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .svc-card:hover,
+      .svc-card:active { border-color: #111111 !important; opacity: 0.9; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r115/three.min.js"></script>
+</helmet>
+
+<!-- ── FIXED NAV ─────────────────────────────────────────────── -->
+<nav style="{{ navStyle }}">
+  <button onClick="{{ goHome }}" style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #111111; letter-spacing: -1px; padding: 0; line-height: 1; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);" style-hover="transform: scale(1.08) rotate(-2deg);">
+    GR<span style="color: #111111;">.</span>
+  </button>
+
+  <!-- Desktop nav -->
+  <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <button onClick="{{ goHome }}" style="{{ homeNavStyle }}" style-hover="color: #111111; background: #F0F0F0;">{{ t.nav.home }}</button>
+      <button onClick="{{ goProjects }}" style="{{ projectsNavStyle }}" style-hover="color: #111111; background: #F0F0F0;">{{ t.nav.projects }}</button>
+      <button onClick="{{ goServices }}" style="{{ servicesNavStyle }}" style-hover="color: #111111; background: #F0F0F0;">{{ t.nav.services }}</button>
+      <button onClick="{{ goContact }}" style="{{ contactNavStyle }}" style-hover="color: #111111; background: #F0F0F0;">{{ t.nav.contact }}</button>
+      <button onClick="{{ toggleLang }}" style="font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800; color: #FFFFFF; background: #111111; padding: 8px 18px; letter-spacing: 1.5px; margin-left: 12px; transition: opacity 0.2s, transform 0.2s;" style-hover="opacity: 0.85; transform: scale(1.05);">{{ langLabel }}</button>
+    </div>
+  </sc-if>
+
+  <!-- Mobile nav -->
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button onClick="{{ toggleLang }}" style="font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800; color: #FFFFFF; background: #111111; padding: 7px 14px; letter-spacing: 1.5px;">{{ langLabel }}</button>
+      <button onClick="{{ toggleMenu }}" style="display: flex; flex-direction: column; gap: 5px; padding: 6px; transition: transform 0.2s;" style-hover="transform: scale(1.15);">
+        <span style="width: 24px; height: 2px; background: #111111; display: block;"></span>
+        <span style="width: 24px; height: 2px; background: #111111; display: block;"></span>
+        <span style="width: 16px; height: 2px; background: #111111; display: block;"></span>
+      </button>
+    </div>
+  </sc-if>
+</nav>
+
+<!-- ── MOBILE MENU OVERLAY ───────────────────────────────────── -->
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position: fixed; inset: 0; z-index: 200; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+    <button onClick="{{ closeMenu }}" style="position: absolute; top: 24px; right: 24px; font-family: 'Syne', sans-serif; font-size: 28px; color: #111111; font-weight: 300; line-height: 1; padding: 8px; transition: transform 0.2s;" style-hover="transform: rotate(90deg);">✕</button>
+    <button onClick="{{ goHomeMobile }}" style="font-family: 'Syne', sans-serif; font-size: clamp(32px, 8vw, 52px); font-weight: 800; color: #111111; padding: 12px 24px; letter-spacing: -1px; transition: transform 0.25s, color 0.25s;" style-hover="transform: translateX(12px); color: #444;">{{ t.nav.home }}</button>
+    <button onClick="{{ goProjectsMobile }}" style="font-family: 'Syne', sans-serif; font-size: clamp(32px, 8vw, 52px); font-weight: 800; color: #111111; padding: 12px 24px; letter-spacing: -1px; transition: transform 0.25s, color 0.25s;" style-hover="transform: translateX(12px); color: #444;">{{ t.nav.projects }}</button>
+    <button onClick="{{ goServicesMobile }}" style="font-family: 'Syne', sans-serif; font-size: clamp(32px, 8vw, 52px); font-weight: 800; color: #111111; padding: 12px 24px; letter-spacing: -1px; transition: transform 0.25s, color 0.25s;" style-hover="transform: translateX(12px); color: #444;">{{ t.nav.services }}</button>
+    <button onClick="{{ goContactMobile }}" style="font-family: 'Syne', sans-serif; font-size: clamp(32px, 8vw, 52px); font-weight: 800; color: #111111; padding: 12px 24px; letter-spacing: -1px; transition: transform 0.25s, color 0.25s;" style-hover="transform: translateX(12px); color: #444;">{{ t.nav.contact }}</button>
+  </div>
+</sc-if>
+
+<!-- ── PAGE WRAPPER ──────────────────────────────────────────── -->
+<div style="padding-top: 68px; min-height: 100vh;">
+
+  <!-- SVG Glitch filter — always in DOM -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+    <defs>
+      <filter id="svc-glitch" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.002 0.92" numOctaves="1" seed="3" result="noise"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" result="displaced"></feDisplacementMap>
+        <!-- Light channel -->
+        <feColorMatrix type="matrix" values="0.55 0.55 0.55 0 0  0.55 0.55 0.55 0 0  0.55 0.55 0.55 0 0  0 0 0 1 0" in="displaced" result="orange"></feColorMatrix>
+        <feOffset dx="-4" dy="1" in="orange" result="orange-off"></feOffset>
+        <!-- Dark channel -->
+        <feColorMatrix type="matrix" values="0.15 0.15 0.15 0 0  0.15 0.15 0.15 0 0  0.15 0.15 0.15 0 0  0 0 0 1 0" in="displaced" result="red"></feColorMatrix>
+        <feOffset dx="4" dy="-1" in="red" result="red-off"></feOffset>
+        <feBlend in="orange-off" in2="red-off" mode="screen" result="blended"></feBlend>
+        <feBlend in="blended" in2="displaced" mode="normal"></feBlend>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ════════════════════════════════════════════════════════
+       HOME
+  ════════════════════════════════════════════════════════════ -->
+  <div style="{{ homePageStyle }}">
+
+    <!-- HERO -->
+    <section class="hero-sec" style="position: relative; min-height: calc(100vh - 68px); overflow: hidden;">
+
+      <!-- Diagonal background lines -->
+      <div style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: repeating-linear-gradient(135deg, transparent 0px, transparent 79px, rgba(0,0,0,0.035) 79px, rgba(0,0,0,0.035) 80px);"></div>
+      <!-- Star field -->
+      <canvas id="star-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;"></canvas>
+
+      <!-- GR. 3D — dead center -->
+      <canvas id="gr-canvas" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(260px, 34vw, 480px); height: clamp(260px, 34vw, 480px); z-index: 1; cursor: grab; background: transparent; animation: fadeIn 1.6s ease 0.15s both;"></canvas>
+
+      <!-- Badge — top left -->
+      <div class="hero-badge" style="position: absolute; top: clamp(28px, 4vw, 52px); left: clamp(20px, 5vw, 72px); z-index: 3; display: flex; align-items: center; gap: 10px; animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s both;">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #111111; flex-shrink: 0; animation: pulseDot 2.5s infinite;"></span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; color: #444; letter-spacing: 2.5px; text-transform: uppercase;">{{ t.hero.badge }}</span>
+      </div>
+
+      <!-- Title — above the logo, spanning full width -->
+      <h1 class="hero-title" style="position: absolute; top: 50%; transform: translateY(-50%); left: clamp(20px, 5vw, 72px); right: clamp(20px, 5vw, 72px); z-index: 3; font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(20px, 2.6vw, 38px); color: #111111; line-height: 1.04; letter-spacing: clamp(-0.5px, -0.022em, -2px); max-width: clamp(260px, 36vw, 480px); padding: 20px 0; animation: fadeUpCenter 1s cubic-bezier(0.16,1,0.3,1) 0.5s both;">
+        {{ t.hero.titleMain }}<span style="color: #111111;">{{ t.hero.titleAccent }}</span>
+      </h1>
+
+      <!-- CTA — bottom left -->
+      <div class="hero-cta" style="position: absolute; bottom: clamp(28px, 5vh, 56px); left: clamp(20px, 5vw, 72px); z-index: 3; display: flex; align-items: center; gap: 20px; animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.7s both;">
+        <div style="width: 24px; height: 24px; border: 1px solid #E0E0E0; border-radius: 50%; flex-shrink: 0;"></div>
+        <button onClick="{{ goContact }}" style="background: #111111; color: #FFFFFF; border: 1.5px solid #111111; padding: 12px 22px; border-radius: 100px; cursor: pointer; display: flex; align-items: center; gap: 14px; transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;" style-hover="background: #FFFFFF; color: #111111; transform: scale(1.06);">
+          <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: clamp(1px, 1.5vw, 3px); text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: clamp(120px, 30vw, 220px);">{{ t.hero.ctaLabel }}</span>
+          <span style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; line-height: 1; transition: transform 0.25s;">→</span>
+        </button>
+      </div>
+
+      <!-- Info card — bottom right -->
+      <div class="hero-card" style="position: absolute; bottom: clamp(28px, 5vh, 56px); right: clamp(20px, 5vw, 72px); z-index: 3; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; animation: fadeRight 0.8s cubic-bezier(0.16,1,0.3,1) 0.75s both;">
+        <div style="display: flex; border: 1px solid #E5E5E5; background: rgba(255,255,255,0.92);">
+          <div style="padding: 10px 14px; border-right: 1px solid #E5E5E5; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;">
+            <span style="font-size: 13px; color: #DADADA; line-height: 1;">⊕</span>
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 7px; color: #C6C6C6; letter-spacing: 2px; text-transform: uppercase;">QC</span>
+          </div>
+          <div style="padding: 10px 14px; display: flex; flex-direction: column; justify-content: center; gap: 2px;">
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 10px; color: #333333; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.4;">{{ t.hero.cardLine1 }}</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 10px; color: #333333; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.4;">{{ t.hero.cardLine2 }}</span>
+          </div>
+        </div>
+        <p style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #BCBCBC; line-height: 1.6; max-width: 200px; text-align: right; font-weight: 300;">{{ t.hero.subtitle }}</p>
+      </div>
+
+    </section>
+
+    <!-- ABOUT -->
+    <section style="background: #FFFFFF; border-top: 1px solid #EAEAEA;">
+
+      <!-- Marquee -->
+      <div style="overflow: hidden; border-bottom: 1px solid #EAEAEA; padding: 20px 0;">
+        <div style="display: flex; width: max-content; animation: svcMarquee 26s linear infinite;">
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">00 — {{ t.aboutLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">00 — {{ t.aboutLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">00 — {{ t.aboutLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">00 — {{ t.aboutLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <!-- duplicate -->
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">00 — {{ t.aboutLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">00 — {{ t.aboutLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">00 — {{ t.aboutLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">00 — {{ t.aboutLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div style="padding: clamp(48px,6vw,80px) clamp(20px,5vw,72px); max-width: 900px; margin: 0 auto;">
+
+        <!-- Text -->
+        <div class="about-text" style="display: flex; flex-direction: column; gap: clamp(24px,3vw,36px);">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px;">
+            <span style="font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: #111111; letter-spacing: 3px; text-transform: uppercase;">00 — {{ t.aboutLabel }}</span>
+            <span style="width: 24px; height: 1px; background: #D8D8D8;"></span>
+            <span class="about-photo" style="background: #111111; padding: 6px 14px; display: flex; align-items: center; gap: 8px;">
+              <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 10px; color: #FFFFFF; letter-spacing: 1px; white-space: nowrap;">QUÉBEC, CA</span>
+              <span style="width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0;"></span>
+              <span style="font-family: 'DM Sans', sans-serif; font-size: 9px; color: rgba(255,255,255,0.65); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap;">{{ t.about.available }}</span>
+            </span>
+          </div>
+
+          <div>
+            <h2 style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(36px,5vw,72px); color: #111111; line-height: 1.0; letter-spacing: clamp(-1px,-0.03em,-2px); margin-bottom: 0;">Gabriel<br><span style="color: #111111;">Rakoto.</span></h2>
+          </div>
+
+          <p style="font-family: 'DM Sans', sans-serif; font-size: clamp(14px,1.3vw,17px); color: #555; line-height: 1.75; font-weight: 300; max-width: 520px;">{{ t.about.bio }}</p>
+
+          <!-- Values row -->
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <sc-for list="{{ t.about.values }}" as="val">
+              <span class="about-pill" style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #444; border: 1px solid #E0E0E0; padding: 7px 16px; letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap;">{{ val }}</span>
+            </sc-for>
+          </div>
+
+          <!-- Stats -->
+          <div style="display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid #EDEDED; padding-top: 28px; gap: 24px;">
+            <sc-for list="{{ t.about.stats }}" as="stat">
+              <div class="about-stat" style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px,3vw,42px); color: #111111; letter-spacing: -1px; line-height: 1;">{{ stat.value }}</span>
+                <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #B0B0B0; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.4;">{{ stat.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SERVICES REVEAL -->
+    <section class="svc-curtain-panel" style="background: #FFFFFF; border-top: 1px solid #EAEAEA;">
+
+        <!-- Marquee header -->
+        <div style="overflow: hidden; border-bottom: 1px solid #EAEAEA; padding: 20px 0;">
+          <div style="display: flex; width: max-content; animation: svcMarquee 22s linear infinite;">
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <!-- duplicate for seamless loop -->
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+            <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">01 — {{ t.servicesLabel }}</span>
+            <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div style="padding: clamp(48px, 6vw, 80px) clamp(20px, 5vw, 72px); max-width: 1440px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px;">
+        <sc-for list="{{ services }}" as="svc">
+          <div class="svc-card" style="background: #F7F7F7; border: 1px solid #EDEDED; border-radius: 16px; padding: clamp(24px, 3vw, 40px);">
+
+
+            <!-- Visual zone -->
+            <div style="height: 120px; border-radius: 10px; background: #F2F2F2; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+
+              <sc-if value="{{ svc.isFirst }}" hint-placeholder-val="{{ false }}">
+                <!-- Browser + code -->
+                <svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="10" y="6" width="180" height="86" rx="7" stroke="#DADADA" stroke-width="1.5"></rect>
+                  <rect x="10" y="6" width="180" height="22" rx="7" fill="#EAEAEA"></rect>
+                  <rect x="10" y="17" width="180" height="11" fill="#EAEAEA"></rect>
+                  <circle cx="25" cy="17" r="4" fill="#111111" opacity="0.85"></circle>
+                  <circle cx="37" cy="17" r="4" fill="#E0E0E0"></circle>
+                  <circle cx="49" cy="17" r="4" fill="#E0E0E0"></circle>
+                  <rect x="62" y="12" width="90" height="10" rx="3" fill="#E8E8E8"></rect>
+                  <rect x="20" y="37" width="65" height="5" rx="2" fill="#111111" opacity="0.7"></rect>
+                  <rect x="20" y="48" width="130" height="4" rx="2" fill="#DADADA"></rect>
+                  <rect x="20" y="58" width="95" height="4" rx="2" fill="#DADADA"></rect>
+                  <rect x="20" y="68" width="55" height="4" rx="2" fill="#E8E8E8"></rect>
+                  <rect x="20" y="78" width="70" height="4" rx="2" fill="#111111" opacity="0.3"></rect>
+                  <rect x="89" y="33" width="2" height="11" rx="1" fill="#111111" style="animation: svcCursor 0.9s steps(2,jump-none) infinite;"></rect>
+                </svg>
+              </sc-if>
+
+              <sc-if value="{{ svc.isSecond }}" hint-placeholder-val="{{ false }}">
+                <!-- Map pin + pulse -->
+                <svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="100" cy="52" r="20" stroke="#111111" stroke-width="1" opacity="0.5" style="animation: svcPulse 2.2s ease-out infinite;"></circle>
+                  <circle cx="100" cy="52" r="20" stroke="#111111" stroke-width="1" opacity="0.35" style="animation: svcPulse 2.2s ease-out 0.75s infinite;"></circle>
+                  <circle cx="100" cy="52" r="20" stroke="#111111" stroke-width="1" opacity="0.2" style="animation: svcPulse 2.2s ease-out 1.5s infinite;"></circle>
+                  <g style="animation: svcFloat 3s ease-in-out infinite;">
+                    <path d="M100 18 C88 18 77 28 77 41 C77 58 100 78 100 78 C100 78 123 58 123 41 C123 28 112 18 100 18Z" fill="#111111" opacity="0.9"></path>
+                    <circle cx="100" cy="41" r="9" fill="#F2F2F2"></circle>
+                  </g>
+                </svg>
+              </sc-if>
+
+              <sc-if value="{{ svc.isThird }}" hint-placeholder-val="{{ false }}">
+                <!-- Bar chart + trend -->
+                <svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="20" y1="88" x2="180" y2="88" stroke="#E0E0E0" stroke-width="1"></line>
+                  <rect x="44" y="68" width="26" height="20" rx="3" fill="#E0E0E0" style="transform-origin: 57px 88px; animation: svcBarA 1s cubic-bezier(0.16,1,0.3,1) 0.1s both;"></rect>
+                  <rect x="82" y="48" width="26" height="40" rx="3" fill="#111111" opacity="0.55" style="transform-origin: 95px 88px; animation: svcBarA 1s cubic-bezier(0.16,1,0.3,1) 0.25s both;"></rect>
+                  <rect x="120" y="24" width="26" height="64" rx="3" fill="#111111" style="transform-origin: 133px 88px; animation: svcBarA 1s cubic-bezier(0.16,1,0.3,1) 0.4s both;"></rect>
+                  <polyline points="57,68 95,48 133,24" stroke="#111111" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"></polyline>
+                  <polygon points="133,14 140,26 126,26" fill="#111111" opacity="0.85"></polygon>
+                </svg>
+              </sc-if>
+
+            </div>
+
+            <div class="svc-icon" style="font-size: 26px; color: #111111; margin-bottom: 18px;">{{ svc.icon }}</div>
+            <h3 class="svc-title" style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(17px, 1.4vw, 21px); color: #111111; margin-bottom: 6px; letter-spacing: -0.3px; line-height: 1.25; display: flex; align-items: center;">{{ svc.title }}<i class="svc-blink">⌖</i></h3>
+            <span class="svc-tag" data-orig="{{ svc.num }}" style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #B0B0B0; letter-spacing: 2.5px; text-transform: uppercase; display: inline-block; margin-bottom: 14px; font-variant-numeric: tabular-nums;">{{ svc.num }}</span>
+            <p style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: #555; line-height: 1.65; margin-bottom: 20px;">{{ svc.desc }}</p>
+            <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: #111111; letter-spacing: -0.5px;">{{ svc.price }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top: 36px;">
+        <button onClick="{{ goServices }}" style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: #444; border-bottom: 1px solid #D8D8D8; padding-bottom: 3px; transition: color 0.2s, border-color 0.2s, transform 0.2s;" style-hover="color: #111111; border-color: #111111; transform: translateX(4px);">{{ t.seeServices }}</button>
+      </div>
+        </div><!-- /cards padding -->
+    </section><!-- /svc-curtain-panel -->
+
+    <!-- PROJECTS PREVIEW -->
+    <section style="max-width: 1440px; margin: 0 auto;">
+
+      <!-- Marquee header -->
+      <div style="overflow: hidden; border-top: 1px solid #EAEAEA; border-bottom: 1px solid #EAEAEA; padding: 20px 0;">
+        <div style="display: flex; width: max-content; animation: svcMarquee 22s linear infinite;">
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <!-- duplicate -->
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #111111; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(12px, 1.1vw, 16px); color: #DADADA; letter-spacing: 4px; text-transform: uppercase; padding: 0 28px; white-space: nowrap;">02 — {{ t.projectsLabel }}</span>
+          <span style="color: #111111; font-size: 8px; padding: 0 4px; opacity: 0.5;">◈</span>
+        </div>
+      </div>
+
+      <!-- Scroll spacer: provides scroll distance for the 3-card sequence -->
+      <div id="proj-scroll-spacer" style="height: 620vh;"></div>
+
+      <!-- Fixed stage: one screen, cards swap driven by scroll -->
+      <div id="proj-stage" style="position: fixed; top: 0; left: 0; right: 0; height: 100vh; background: #FFFFFF; overflow: hidden; display: flex; align-items: center; justify-content: center; padding-top: 68px; z-index: 4; opacity: 0; pointer-events: none; visibility: hidden;">
+        <sc-for list="{{ homeProjects }}" as="proj">
+          <div class="proj-stacked-card" style="position: absolute; inset: 0; padding-top: 68px; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; will-change: transform;">
+            <!-- Scrolling bg title -->
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; pointer-events: none; user-select: none; overflow: hidden;">
+              <div style="display: flex; width: max-content; animation: svcMarquee 13s linear infinite;">
+                <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20vw; color: rgba(0,0,0,0.05); white-space: nowrap; text-transform: uppercase; letter-spacing: -0.05em; line-height: 1; padding: 0 48px; flex-shrink: 0;">{{ proj.title }}</span>
+                <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20vw; color: rgba(0,0,0,0.05); white-space: nowrap; text-transform: uppercase; letter-spacing: -0.05em; line-height: 1; padding: 0 48px; flex-shrink: 0;">{{ proj.title }}</span>
+                <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20vw; color: rgba(0,0,0,0.05); white-space: nowrap; text-transform: uppercase; letter-spacing: -0.05em; line-height: 1; padding: 0 48px; flex-shrink: 0;">{{ proj.title }}</span>
+                <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20vw; color: rgba(0,0,0,0.05); white-space: nowrap; text-transform: uppercase; letter-spacing: -0.05em; line-height: 1; padding: 0 48px; flex-shrink: 0;">{{ proj.title }}</span>
+              </div>
+            </div>
+            <!-- Tag -->
+            <div style="position: absolute; top: 96px; left: clamp(20px,5vw,72px); z-index: 3;">
+              <span style="{{ proj.tagStyle }}">{{ proj.tag }}</span>
+            </div>
+            <!-- Visit link -->
+            <div style="position: absolute; top: 100px; right: clamp(20px,5vw,72px); z-index: 3; pointer-events: auto; cursor: pointer;" onClick="{{ proj.onClick }}">
+              <span style="font-family: 'DM Sans',sans-serif; font-size: 11px; color: #AAAAAA; letter-spacing: 1.5px; text-transform: uppercase;">Visiter →</span>
+            </div>
+            <!-- Card -->
+            <div class="proj-home-card" style="position: relative; z-index: 2; width: min(520px, 88vw); pointer-events: auto; cursor: pointer; border: 1.5px solid #111111; background: #111111;" onClick="{{ proj.onClick }}">
+              <!-- Corner arrow -->
+              <div style="position: absolute; top: 14px; right: 14px; z-index: 5; width: 32px; height: 32px; border: 1px solid #444; display: flex; align-items: center; justify-content: center;">
+                <span style="font-family: 'Syne', sans-serif; font-size: 13px; color: #FFFFFF; line-height: 1;">↗</span>
+              </div>
+              <!-- Image -->
+              <div style="position: relative; overflow: hidden;">
+                <div class="proj-screen-bg" style="height: 300px; background: #1A1A1A; background-size: cover; background-position: center;"></div>
+                <!-- Bottom fade -->
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(transparent, #111111); pointer-events: none;"></div>
+                <!-- Top-left corner accent -->
+                <div style="position: absolute; top: 0; left: 0; width: 28px; height: 28px; border-top: 2px solid #FFFFFF; border-left: 2px solid #FFFFFF;"></div>
+              </div>
+              <!-- Info -->
+              <div class="proj-home-info" style="padding: 18px 22px 20px; border-top: 1px solid #333;">
+                <div style="font-family: 'DM Sans', sans-serif; font-size: 9px; color: #AAAAAA; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 8px;">{{ proj.niche }}</div>
+                <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(20px, 2.2vw, 28px); color: #FFFFFF; letter-spacing: -0.6px; margin-bottom: 16px;">{{ proj.title }}</div>
+                <!-- Service tags -->
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                  <sc-for list="{{ proj.services }}" as="svc">
+                    <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #CCCCCC; border: 1px solid #444; padding: 5px 12px; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap;">{{ svc }}</span>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding: clamp(32px, 4vw, 48px) clamp(20px, 5vw, 72px);">
+        <button onClick="{{ goProjects }}" style="font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #111111; background: #FFFFFF; border: 1.5px solid #D8D8D8; padding: 14px 32px; transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;" style-hover="border-color: #111111; background: #111111; color: #FFFFFF; transform: translateY(-3px);">{{ t.seeProjects }} →</button>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <div style="margin: clamp(32px, 4vw, 64px) clamp(20px, 5vw, 72px) 0;">
+      <div style="background: #111111; padding: clamp(44px, 6vw, 80px) clamp(32px, 5vw, 64px); cursor: pointer; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; transition: opacity 0.2s, transform 0.3s;" style-hover="opacity: 0.93; transform: scale(1.01);" onClick="{{ goContact }}">
+        <h2 style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px, 4.5vw, 68px); color: #FFFFFF; line-height: 1.0; letter-spacing: clamp(-1px, -0.025em, -2px); max-width: 700px; white-space: pre-line;">{{ t.ctaBanner }}</h2>
+        <span style="font-family: 'Syne', sans-serif; font-size: clamp(36px, 5vw, 64px); font-weight: 800; color: #FFFFFF; opacity: 0.3; flex-shrink: 0; transition: transform 0.3s;">→</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       PROJECTS
+  ════════════════════════════════════════════════════════════ -->
+  <sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+    <div style="padding: clamp(56px, 8vw, 110px) clamp(20px, 5vw, 72px); max-width: 1440px; margin: 0 auto; animation: pageIn 0.7s cubic-bezier(0.16,1,0.3,1) both;">
+
+      <div style="margin-bottom: clamp(48px, 6vw, 80px);">
+        <span style="font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: #111111; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 20px;">02 — {{ t.projectsLabel }}</span>
+        <h1 style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(44px, 7vw, 96px); color: #111111; line-height: 1.0; letter-spacing: clamp(-1px, -0.03em, -3px);">{{ t.projectsHero }}</h1>
+      </div>
+
+      <!-- Card stack (scroll-driven stage, same technique as the home page) -->
+      <div id="projpage-scroll-spacer" style="height: 620vh; position: relative;">
+        <div id="projpage-stage" style="position: fixed; top: 0; left: 0; right: 0; height: 100vh; background: #FFFFFF; overflow: hidden; display: flex; align-items: center; justify-content: center; z-index: 4; opacity: 0; pointer-events: none; visibility: hidden;">
+          <sc-for list="{{ projectsStack }}" as="proj" hint-placeholder-count="3">
+            <div class="projpage-stacked-card" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; will-change: transform, opacity; padding: 0 clamp(20px,5vw,72px);">
+              <div class="projpage-card" style="width: min(1300px, 96vw); max-height: 82vh; overflow: hidden; border: 1px solid #DADADA; border-radius: 28px; background: #F7F7F7;">
+                <div class="projpage-card-inner" style="display: flex; flex-wrap: wrap-reverse; align-items: center; gap: clamp(28px, 4vw, 56px); padding: clamp(32px, 4vw, 56px);">
+                  <div class="projpage-copy" style="flex: 2 1 280px; display: flex; flex-direction: column; gap: 16px;">
+                    <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #B0B0B0; letter-spacing: 2.5px; text-transform: uppercase;">{{ proj.niche }}</span>
+                    <h3 style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px, 3.4vw, 52px); color: #111111; letter-spacing: -1px; line-height: 1.05;">{{ proj.title }}</h3>
+                    <p style="font-family: 'DM Sans', sans-serif; font-size: 15px; color: #555; line-height: 1.7; max-width: 460px;">{{ proj.desc }}</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+                      <sc-for list="{{ proj.services }}" as="svc">
+                        <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #555; border: 1px solid #E5E5E5; padding: 6px 14px; border-radius: 100px; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap;">{{ svc }}</span>
+                      </sc-for>
+                    </div>
+                    <span style="font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #FFFFFF; background: #111111; padding: 13px 28px; border-radius: 100px; letter-spacing: 0.3px; width: fit-content; margin-top: 12px; border: 1.5px solid #111111; cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.2s;" style-hover="background: #FFFFFF; color: #111111; transform: translateY(-3px);" onClick="{{ proj.onClick }}">{{ t.seeProject }} →</span>
+                  </div>
+                  <div style="{{ proj.stackCardStyle }}">
+                    <span style="{{ proj.tagStyle }}">{{ proj.tag }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+            <!-- CTA -->
+      <div style="margin-top: clamp(64px, 8vw, 110px); border-top: 1px solid #EDEDED; padding-top: clamp(48px, 6vw, 80px); display: flex; flex-direction: column; gap: 24px; align-items: flex-start;">
+        <p style="font-family: 'DM Sans', sans-serif; font-size: clamp(16px, 1.5vw, 20px); color: #444; line-height: 1.7; max-width: 480px;">{{ t.projectsCta }}</p>
+        <button onClick="{{ goContact }}" style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; background: #111111; border: 1.5px solid #111111; padding: 16px 36px; letter-spacing: 0.3px; transition: background 0.25s ease, color 0.25s ease, transform 0.2s;" style-hover="background: #FFFFFF; color: #111111; transform: translateY(-3px);">{{ t.hero.cta }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ════════════════════════════════════════════════════════
+       SERVICES
+  ════════════════════════════════════════════════════════════ -->
+  <sc-if value="{{ isServices }}" hint-placeholder-val="{{ false }}">
+    <div style="padding: clamp(56px, 8vw, 110px) clamp(20px, 5vw, 72px); max-width: 1440px; margin: 0 auto; animation: pageIn 0.7s cubic-bezier(0.16,1,0.3,1) both;">
+
+      <div class="svc-page-head" style="margin-bottom: clamp(48px, 6vw, 80px);">
+        <span style="font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: #111111; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 20px;">03 — {{ t.servicesLabel }}</span>
+        <h1 style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(44px, 7vw, 96px); color: #111111; line-height: 1.0; letter-spacing: clamp(-1px, -0.03em, -3px); white-space: pre-line;">{{ t.servicesHero }}</h1>
+      </div>
+
+      <div class="svc-page-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 0; align-items: stretch;">
+        <sc-for list="{{ services }}" as="svc">
+          <div class="svc-card" style="{{ svc.cardStyle }}">
+            <h3 class="svc-title" style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(24px, 2.2vw, 32px); color: #111111; letter-spacing: -0.5px; margin-bottom: 10px; display: flex; align-items: center; min-height: 2.2em;">{{ svc.title }}<i class="svc-blink">⌖</i></h3>
+            <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #666; line-height: 1.6; min-height: 66px;">{{ svc.desc }}</p>
+
+            <div style="border-top: 1px solid #DDDDDD; margin: 24px 0;"></div>
+
+            <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 28px;">
+              <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(34px, 3.4vw, 48px); color: #111111; letter-spacing: -1.5px; line-height: 1;">{{ svc.price }}</span>
+            </div>
+
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; flex: 1;">
+              <sc-for list="{{ svc.points }}" as="pt">
+                <li style="display: flex; align-items: flex-start; gap: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: {{ svc.pointColor }}; line-height: 1.5;">
+                  <span style="color: #111111; font-size: 12px; flex-shrink: 0; line-height: 1.6;">✦</span>
+                  {{ pt }}
+                </li>
+              </sc-for>
+            </ul>
+
+            <button onClick="{{ goContact }}" style="{{ svc.ctaStyle }}" style-hover="background: #111111; color: #FFFFFF; border-color: #111111;">
+              {{ t.servicesCta }}
+              <span style="{{ svc.ctaIconStyle }}">→</span>
+            </button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ════════════════════════════════════════════════════════
+       CONTACT
+  ════════════════════════════════════════════════════════════ -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <div style="padding: clamp(56px, 8vw, 110px) clamp(20px, 5vw, 72px); max-width: 1440px; margin: 0 auto; animation: pageIn 0.7s cubic-bezier(0.16,1,0.3,1) both;">
+
+      <div style="margin-bottom: clamp(48px, 6vw, 80px);">
+        <span style="font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: #111111; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 20px;">04 — Contact</span>
+        <h1 style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(44px, 7vw, 96px); color: #111111; line-height: 1.0; letter-spacing: clamp(-1px, -0.03em, -3px); white-space: pre-line;">{{ t.contact.title }}</h1>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: clamp(48px, 6vw, 80px); align-items: start;">
+
+        <!-- Form -->
+        <div>
+          <sc-if value="{{ formSubmitted }}" hint-placeholder-val="{{ false }}">
+            <div style="background: #F7F7F7; border: 1px solid #111111; padding: 48px; text-align: center;">
+              <div style="font-size: 40px; margin-bottom: 20px; color: #111111;">✓</div>
+              <h3 style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #111111; margin-bottom: 12px; letter-spacing: -0.3px;">{{ t.contact.successTitle }}</h3>
+              <p style="font-family: 'DM Sans', sans-serif; font-size: 15px; color: #555;">{{ t.contact.successMsg }}</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ formNotSubmitted }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ handleSubmit }}" style="display: flex; flex-direction: column; gap: 16px;">
+              <input type="text" placeholder="{{ t.contact.namePlaceholder }}" required="" style="background: #F7F7F7; border: 1px solid #EDEDED; color: #111111; padding: 18px 20px; font-size: 15px; width: 100%; transition: border-color 0.25s;" style-focus="border-color: #111111;">
+              <input type="email" placeholder="{{ t.contact.emailPlaceholder }}" required="" style="background: #F7F7F7; border: 1px solid #EDEDED; color: #111111; padding: 18px 20px; font-size: 15px; width: 100%; transition: border-color 0.25s;" style-focus="border-color: #111111;">
+              <textarea placeholder="{{ t.contact.messagePlaceholder }}" rows="6" required="" style="background: #F7F7F7; border: 1px solid #EDEDED; color: #111111; padding: 18px 20px; font-size: 15px; width: 100%; resize: vertical; min-height: 160px; transition: border-color 0.25s;" style-focus="border-color: #111111;"></textarea>
+              <button type="submit" style="font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: #FFFFFF; background: #111111; border: 1.5px solid #111111; padding: 18px 36px; letter-spacing: 0.3px; transition: background 0.2s, color 0.2s;" style-hover="background: #FFFFFF; color: #111111;">{{ t.contact.submit }}</button>
+            </form>
+          </sc-if>
+        </div>
+
+        <!-- Info -->
+        <div style="display: flex; flex-direction: column; gap: 36px; padding-top: 4px;">
+          <p style="font-family: 'DM Sans', sans-serif; font-size: clamp(15px, 1.4vw, 18px); color: #444; line-height: 1.75; font-weight: 300;">{{ t.contact.subtitle }}</p>
+
+          <div style="border-top: 1px solid #EDEDED; padding-top: 32px;">
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #BCBCBC; letter-spacing: 2.5px; text-transform: uppercase; display: block; margin-bottom: 10px;">Email</span>
+            <a href="mailto:gabrielrakotor40@gmail.com" style="font-family: 'Syne', sans-serif; font-size: clamp(16px, 1.8vw, 24px); font-weight: 700; color: #111111; letter-spacing: -0.3px; transition: color 0.2s, letter-spacing 0.2s; word-break: break-all;" style-hover="color: #666; letter-spacing: -0.1px;">gabrielrakotor40@gmail.com</a>
+          </div>
+
+          <div style="border-top: 1px solid #EDEDED; padding-top: 32px;">
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #BCBCBC; letter-spacing: 2.5px; text-transform: uppercase; display: block; margin-bottom: 10px;">Téléphone</span>
+            <a href="tel:+15819792198" style="font-family: 'Syne', sans-serif; font-size: clamp(16px, 1.8vw, 24px); font-weight: 700; color: #111111; letter-spacing: -0.3px; transition: color 0.2s, letter-spacing 0.2s;" style-hover="color: #666; letter-spacing: -0.1px;">581-979-2198</a>
+          </div>
+
+          <div style="border-top: 1px solid #EDEDED; padding-top: 32px;">
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #BCBCBC; letter-spacing: 2.5px; text-transform: uppercase; display: block; margin-bottom: 10px;">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/gabriel-rakoto-708b39351/" target="_blank" rel="noopener noreferrer" style="font-family: 'Syne', sans-serif; font-size: clamp(16px, 1.8vw, 24px); font-weight: 700; color: #111111; letter-spacing: -0.3px; transition: color 0.2s, letter-spacing 0.2s;" style-hover="color: #666; letter-spacing: -0.1px;">gabriel-rakoto</a>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="flex: 1; height: 1px; background: #EDEDED;"></div>
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: #BCBCBC;">{{ t.contact.orText }}</span>
+            <div style="flex: 1; height: 1px; background: #EDEDED;"></div>
+          </div>
+
+          <a href="https://calendly.com/gabriel-rakoto" target="_blank" style="display: block; border: 1.5px solid #D8D8D8; padding: 18px 28px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #111111; background: #FFFFFF; text-align: center; letter-spacing: 0.3px; transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;" style-hover="border-color: #111111; background: #111111; color: #FFFFFF; transform: translateY(-3px);">{{ t.contact.calendly }}</a>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer style="border-top: 1px solid #EEEEEE; padding: clamp(40px, 5vw, 64px) clamp(20px, 5vw, 72px) 32px; display: flex; flex-direction: column; gap: 40px; margin-top: 80px;">
+  <div style="display: flex; flex-wrap: wrap; gap: 48px; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column; gap: 14px; max-width: 320px;">
+      <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: #111111; letter-spacing: -0.5px;">GR<span style="color: #111111;">.</span></span>
+      <p style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: #888; line-height: 1.6; font-weight: 300;">{{ t.footer.tagline }}</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #BCBCBC; letter-spacing: 2.5px; text-transform: uppercase;">{{ t.footer.pages }}</span>
+      <button onClick="{{ goHome }}" style="font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #444; text-align: left; transition: color 0.2s;" style-hover="color: #111111;">{{ t.nav.home }}</button>
+      <button onClick="{{ goProjects }}" style="font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #444; text-align: left; transition: color 0.2s;" style-hover="color: #111111;">{{ t.nav.projects }}</button>
+      <button onClick="{{ goServices }}" style="font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #444; text-align: left; transition: color 0.2s;" style-hover="color: #111111;">{{ t.nav.services }}</button>
+      <button onClick="{{ goContact }}" style="font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #444; text-align: left; transition: color 0.2s;" style-hover="color: #111111;">{{ t.nav.contact }}</button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #BCBCBC; letter-spacing: 2.5px; text-transform: uppercase;">Contact</span>
+      <a href="mailto:gabrielrakotor40@gmail.com" style="font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #444; transition: color 0.2s;" style-hover="color: #111111;">gabrielrakotor40@gmail.com</a>
+      <a href="tel:+15819792198" style="font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #444; transition: color 0.2s;" style-hover="color: #111111;">581-979-2198</a>
+      <a href="https://www.linkedin.com/in/gabriel-rakoto-708b39351/" target="_blank" rel="noopener noreferrer" style="font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #444; transition: color 0.2s;" style-hover="color: #111111;">LinkedIn</a>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #EEEEEE; padding-top: 20px;">
+    <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: #BCBCBC;">© 2026 Gabriel Rakoto · Québec, Canada</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 },
+  &quot;accentColor&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#111111&quot;, &quot;options&quot;: [&quot;#111111&quot;,&quot;#E63946&quot;,&quot;#2563EB&quot;,&quot;#10B981&quot;], &quot;section&quot;: &quot;Couleurs&quot; },
+  &quot;defaultLang&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;fr&quot;, &quot;options&quot;: [&quot;fr&quot;,&quot;en&quot;], &quot;section&quot;: &quot;Langue&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    page: 'home',
+    lang: 'fr',
+    scrolled: false,
+    menuOpen: false,
+    isMobile: typeof window !== 'undefined' && window.innerWidth < 768,
+    formSubmitted: false,
+  };
+
+  componentDidMount() {
+    setTimeout(() => { this.setupGlitch(); this.setupScrollReveal(); this.setupCurtainReveal(); this.setupAboutReveal(); }, 400);
+    this._onScroll = () => {
+      const s = window.scrollY > 40;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+    };
+    this._onResize = () => {
+      const m = window.innerWidth < 768;
+      if (m !== this.state.isMobile) this.setState({ isMobile: m });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onResize);
+    this.setupAnimations();
+    setTimeout(() => { this.initStars(); this.initThreeJS(); }, 200);
+    setTimeout(() => this._setupProjReveal(), 400);
+    if (this.state.page === 'projects') setTimeout(() => this._setupProjectsPageReveal(), 400);
+
+  }
+
+  componentDidUpdate(pp, ps) {
+    if (ps.page !== this.state.page) this._afterPageChange();
+  }
+
+  _afterPageChange() {
+    window.scrollTo({ top: 0 });
+    setTimeout(() => {
+      this.setupAnimations();
+      this.setupGlitch();
+      this.setupScrollReveal();
+      if (this.state.page === 'home') { this.setupCurtainReveal(); this._setupProjReveal(); this.setupAboutReveal(); }
+      if (this.state.page === 'projects') { this._setupProjectsPageReveal(); }
+    }, 80);
+  }
+
+  goTo(page, extra) {
+    this.setState(Object.assign({ page }, extra));
+    this._afterPageChange();
+  }
+
+  setupCurtainReveal() {}
+
+  setupAboutReveal() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const trigger = (el, delay) => {
+      el.classList.remove('anim-in');
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+      el.style.animationDelay = delay + 's';
+      el.classList.add('anim-in');
+    };
+
+    const reset = (el) => {
+      el.classList.remove('anim-in');
+    };
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const section = entry.target;
+        const photo = section.querySelector('.about-photo');
+        const text  = section.querySelector('.about-text');
+        const pills = section.querySelectorAll('.about-pill');
+        const stats = section.querySelectorAll('.about-stat');
+
+        if (reduced) {
+          if (photo) photo.style.opacity = '1';
+          if (text) text.style.opacity = '1';
+          pills.forEach(p => p.style.opacity = '1');
+          stats.forEach(s => s.style.opacity = '1');
+          return;
+        }
+
+        if (entry.isIntersecting) {
+          if (photo) trigger(photo, 0);
+          if (text)  trigger(text,  0.15);
+          pills.forEach((p, i) => trigger(p, 0.35 + i * 0.07));
+          stats.forEach((s, i) => trigger(s, 0.55 + i * 0.1));
+        } else {
+          if (photo) reset(photo);
+          if (text)  reset(text);
+          pills.forEach(reset);
+          stats.forEach(reset);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    const section = document.querySelector('.about-photo')?.closest('section');
+    if (section) obs.observe(section);
+    this._aboutObs = obs;
+  }
+
+  setupScrollReveal() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+    if (this._scrollObserver) this._scrollObserver.disconnect();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('scroll-hidden');
+          entry.target.style.animation = 'none';
+          void entry.target.offsetWidth;
+          entry.target.style.animation = '';
+          entry.target.classList.add('scroll-visible');
+        } else {
+          entry.target.classList.remove('scroll-visible');
+          entry.target.classList.add('scroll-hidden');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    this._scrollObserver = observer;
+
+    document.querySelectorAll('.svc-card').forEach((card, i) => {
+      const rect = card.getBoundingClientRect();
+      const alreadyVisible = rect.height > 0 && rect.top < window.innerHeight * 0.9 && rect.bottom > 0;
+      if (alreadyVisible) {
+        card.classList.remove('scroll-hidden');
+        card.classList.add('scroll-visible');
+      } else {
+        card.classList.add('scroll-hidden');
+        card.style.animationDelay = (i * 0.1) + 's';
+      }
+      observer.observe(card);
+    });
+  }
+
+  setupGlitch() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    const dispMap = document.querySelector('#svc-glitch feDisplacementMap');
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!%&';
+
+    document.querySelectorAll('.svc-card').forEach(card => {
+      // Remove old listeners before rebinding
+      if (card._glitchStart) {
+        card.removeEventListener('mouseenter', card._glitchStart);
+        card.removeEventListener('mouseleave', card._glitchStop);
+        card.removeEventListener('touchstart', card._glitchStart);
+        card.removeEventListener('touchend', card._glitchStop);
+      }
+
+      const tag = card.querySelector('.svc-tag');
+      const origText = tag ? (tag.dataset.orig || tag.textContent) : '';
+
+      let glitchRaf, scrambleRaf;
+
+      const startGlitch = () => {
+        cancelAnimationFrame(glitchRaf);
+        cancelAnimationFrame(scrambleRaf);
+
+        // Flash: apply filter, animate scale 0→5→0, then remove filter
+        if (dispMap) {
+          card.style.filter = 'url(#svc-glitch)';
+          let start = null;
+          const duration = 350;
+          const animG = ts => {
+            if (!start) start = ts;
+            const p = Math.min((ts - start) / duration, 1);
+            const scale = p < 0.4 ? (p / 0.4) * 5 : ((1 - p) / 0.6) * 5;
+            dispMap.setAttribute('scale', scale);
+            if (p < 1) {
+              glitchRaf = requestAnimationFrame(animG);
+            } else {
+              dispMap.setAttribute('scale', 0);
+              card.style.filter = '';
+            }
+          };
+          glitchRaf = requestAnimationFrame(animG);
+        }
+
+        // Scramble then resolve
+        if (tag) {
+          let start2 = null;
+          const animS = ts => {
+            if (!start2) start2 = ts;
+            const p = Math.min((ts - start2) / 400, 1);
+            const resolved = Math.floor(p * origText.length);
+            let out = '';
+            for (let i = 0; i < origText.length; i++) {
+              out += i < resolved
+                ? origText[i]
+                : chars[Math.floor(Math.random() * chars.length)];
+            }
+            tag.textContent = out;
+            if (p < 1) scrambleRaf = requestAnimationFrame(animS);
+            else tag.textContent = origText;
+          };
+          scrambleRaf = requestAnimationFrame(animS);
+        }
+      };
+
+      const stopGlitch = () => {
+        cancelAnimationFrame(glitchRaf);
+        cancelAnimationFrame(scrambleRaf);
+        if (dispMap) dispMap.setAttribute('scale', 0);
+        card.style.filter = '';
+        if (tag) tag.textContent = origText;
+      };
+
+      card._glitchStart = startGlitch;
+      card._glitchStop = stopGlitch;
+      card.addEventListener('mouseenter', startGlitch);
+      card.addEventListener('mouseleave', stopGlitch);
+      card.addEventListener('touchstart', startGlitch, { passive: true });
+      card.addEventListener('touchend', stopGlitch, { passive: true });
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
+    if (this._projScrollHandler) window.removeEventListener('scroll', this._projScrollHandler);
+    if (this._projRevealObserver) this._projRevealObserver.disconnect();
+    if (this._projPageRAF) cancelAnimationFrame(this._projPageRAF);
+    this.disposeStars();
+    this.disposeThreeJS();
+  }
+
+  initStars() {
+    this.disposeStars();
+    const canvas = document.getElementById('star-canvas');
+    if (!canvas) return;
+
+    const resize = () => {
+      const section = canvas.parentElement;
+      const W = window.innerWidth;
+      const H = section ? section.getBoundingClientRect().height || window.innerHeight : window.innerHeight;
+      canvas.width = Math.round(W);
+      canvas.height = Math.round(H);
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      return { W: Math.round(W), H: Math.round(H) };
+    };
+
+    let { W, H } = resize();
+
+    // Re-generate on resize
+    this._starResizeHandler = () => {
+      const dims = resize();
+      W = dims.W; H = dims.H;
+      generateDots();
+    };
+    window.addEventListener('resize', this._starResizeHandler);
+
+    let stars = [], sparks = [];
+    const generateDots = () => {
+      stars = Array.from({ length: 220 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.1 + 0.2,
+        alpha: Math.random() * 0.5 + 0.08,
+        speed: Math.random() * 0.006 + 0.002,
+        phase: Math.random() * Math.PI * 2,
+      }));
+      sparks = Array.from({ length: 28 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.6 + 0.5,
+        alpha: Math.random() * 0.45 + 0.1,
+        speed: Math.random() * 0.012 + 0.004,
+        phase: Math.random() * Math.PI * 2,
+      }));
+    };
+    generateDots();
+
+    const ctx = canvas.getContext('2d');
+    let t = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, W, H);
+      t++;
+      stars.forEach(s => {
+        const a = s.alpha * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(60,60,60,${a.toFixed(3)})`;
+        ctx.fill();
+      });
+      sparks.forEach(s => {
+        const a = s.alpha * (0.4 + 0.6 * Math.sin(t * s.speed + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(20,20,20,${a.toFixed(3)})`;
+        ctx.fill();
+      });
+      this._starRAF = requestAnimationFrame(draw);
+    };
+    draw();
+  }
+
+  disposeStars() {
+    if (this._starRAF) { cancelAnimationFrame(this._starRAF); this._starRAF = null; }
+    if (this._starResizeHandler) { window.removeEventListener('resize', this._starResizeHandler); this._starResizeHandler = null; }
+  }
+
+  initThreeJS() {
+    if (this._threeRenderer) return;
+    if (typeof THREE === 'undefined') { setTimeout(() => this.initThreeJS(), 300); return; }
+    const canvas = document.getElementById('gr-canvas');
+    if (!canvas) { setTimeout(() => this.initThreeJS(), 200); return; }
+    // Read CSS size via getBoundingClientRect to avoid layout thrash
+    const rect = canvas.getBoundingClientRect();
+    const W = Math.round(rect.width) || 380;
+    const H = Math.round(rect.height) || 380;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setSize(W, H, false); // false = don't overwrite CSS dimensions
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.5;
+    this._threeRenderer = renderer;
+
+    const scene = new THREE.Scene();
+    this._threeScene = scene;
+
+    const camera = new THREE.PerspectiveCamera(48, W / H, 0.1, 100);
+    camera.position.set(0.6, -1.0, 6.8);
+    camera.lookAt(0, 0, 0);
+    this._threeCamera = camera;
+
+    // Orange dramatic light — behind letters
+    const orangeLight = new THREE.PointLight(0xFFFFFF, 14, 22);
+    orangeLight.position.set(0.1, 0.1, 1.8);
+    scene.add(orangeLight);
+
+    // Warm fill — G negative space
+    const fillLight = new THREE.PointLight(0xE0E0E0, 6, 14);
+    fillLight.position.set(-0.9, 0.2, 1.2);
+    scene.add(fillLight);
+
+    // Cool rim — opposite side
+    const rimLight = new THREE.DirectionalLight(0xBBBBBB, 0.55);
+    rimLight.position.set(-5, 3, -4);
+    scene.add(rimLight);
+
+    // Very dim ambient
+    scene.add(new THREE.AmbientLight(0x060606, 1));
+
+    // Particles
+    const pCount = 80;
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(pCount * 3);
+    for (let i = 0; i < pCount; i++) {
+      const r = 1.8 + Math.random() * 1.4;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI;
+      pPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+      pPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 0.55;
+      pPos[i*3+2] = (Math.random() - 0.5) * 1.5;
+    }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    const pMat = new THREE.PointsMaterial({ color: 0x222222, size: 0.045, transparent: true, opacity: 0.65 });
+    scene.add(new THREE.Points(pGeo, pMat));
+    this._threeParticlesMat = pMat;
+
+    // Lightning arcs
+    this._lightningArcs = [];
+    for (let i = 0; i < 6; i++) {
+      const pts = new Float32Array(12 * 3);
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(pts, 3));
+      const m = new THREE.LineBasicMaterial({ color: 0x1A1A1A, transparent: true, opacity: 0 });
+      const line = new THREE.Line(g, m);
+      scene.add(line);
+      this._lightningArcs.push({ line, timer: Math.floor(Math.random() * 60), active: false, life: 0 });
+    }
+
+    // Cursor-follow interaction
+    this._threeAutoRotate = true;
+    this._threeTargetRotY = 0;
+    this._threeTargetRotX = 0;
+
+    const onMouseMove = (e) => {
+      if (!this._threeAutoRotate) {
+        const rect = canvas.getBoundingClientRect();
+        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+        this._threeTargetRotY = nx * 0.75;
+        this._threeTargetRotX = -ny * 0.38;
+      }
+    };
+    const onMouseEnter = () => { this._threeAutoRotate = false; };
+    const onMouseLeave = () => { this._threeAutoRotate = true; };
+    canvas.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('mouseenter', onMouseEnter);
+    canvas.addEventListener('mouseleave', onMouseLeave);
+    this._threeListeners = { canvas, onMouseMove, onMouseEnter, onMouseLeave };
+
+    const loader = new THREE.FontLoader();
+    const fontUrl = 'https://cdn.jsdelivr.net/npm/three@0.115.0/examples/fonts/helvetiker_bold.typeface.json';
+    loader.load(fontUrl, (font) => {
+      const geo = new THREE.TextGeometry('GR.', {
+        font, size: 1.3, height: 1.3, curveSegments: 8,
+        bevelEnabled: true, bevelThickness: 0.07, bevelSize: 0.04, bevelSegments: 3,
+      });
+      geo.computeBoundingBox();
+      const { min, max } = geo.boundingBox;
+      geo.translate(-(max.x+min.x)/2, -(max.y+min.y)/2, -(max.z+min.z)/2);
+      const mat = new THREE.MeshStandardMaterial({
+        color: new THREE.Color(0x080808), metalness: 0.88, roughness: 0.18,
+        emissive: new THREE.Color(0x000000), emissiveIntensity: 0.04,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      scene.add(mesh);
+      this._threeMesh = mesh;
+    }, undefined, (err) => console.warn('Font load failed', err));
+
+    let frame = 0;
+    const animate = () => {
+      if (!this._threeRenderer) return;
+      this._threeRAF = requestAnimationFrame(animate);
+      frame++;
+      if (this._threeMesh) {
+        if (this._threeAutoRotate) this._threeTargetRotY += 0.005;
+        this._threeMesh.rotation.y += (this._threeTargetRotY - this._threeMesh.rotation.y) * 0.08;
+        this._threeMesh.rotation.x += (this._threeTargetRotX - this._threeMesh.rotation.x) * 0.08;
+      }
+      if (this._threeParticlesMat) {
+        this._threeParticlesMat.opacity = 0.45 + Math.sin(frame * 0.04) * 0.2;
+      }
+      if (this._lightningArcs) {
+        this._lightningArcs.forEach(arc => {
+          arc.timer--;
+          if (arc.timer <= 0 && !arc.active) {
+            arc.active = true; arc.life = 5 + Math.floor(Math.random()*7);
+            arc.timer = 25 + Math.floor(Math.random()*80);
+            arc.line.material.opacity = 0.9;
+            const p = arc.line.geometry.attributes.position.array;
+            const n = p.length/3;
+            const sx=(Math.random()-0.5)*2.8, sy=(Math.random()-0.5)*1.6, sz=Math.random()>0.5?0.7:-0.7;
+            const ex=sx+(Math.random()-0.5)*1.6, ey=sy+(Math.random()-0.5)*1.6, ez=sz+(Math.random()-0.5)*0.4;
+            for (let j=0;j<n;j++){const t=j/(n-1);const jit=Math.sin(t*Math.PI)*0.22;
+              p[j*3]=sx+(ex-sx)*t+(Math.random()-0.5)*jit;
+              p[j*3+1]=sy+(ey-sy)*t+(Math.random()-0.5)*jit;
+              p[j*3+2]=sz+(ez-sz)*t;}
+            arc.line.geometry.attributes.position.needsUpdate=true;
+          } else if (arc.active) {
+            arc.life--;
+            arc.line.material.opacity *= 0.72;
+            if (arc.life<=0){arc.active=false;arc.line.material.opacity=0;}
+          }
+        });
+      }
+      renderer.render(scene, camera);
+    };
+    animate();
+  }
+
+  disposeThreeJS() {
+    if (this._threeListeners) {
+      const { canvas, onMouseMove, onMouseEnter, onMouseLeave } = this._threeListeners;
+      canvas.removeEventListener('mousemove', onMouseMove);
+      canvas.removeEventListener('mouseenter', onMouseEnter);
+      canvas.removeEventListener('mouseleave', onMouseLeave);
+      this._threeListeners = null;
+    }
+    if (this._threeRAF) { cancelAnimationFrame(this._threeRAF); this._threeRAF = null; }
+    if (this._threeRenderer) { this._threeRenderer.dispose(); this._threeRenderer = null; }
+    this._threeMesh = null;
+    this._threeScene = null;
+    this._threeCamera = null;
+  }
+
+  setupAnimations() {
+    const els = document.querySelectorAll('[data-anim]');
+    if (!els.length) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(36px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      obs.observe(el);
+    });
+  }
+
+  // ── Tag styles ──────────────────────────────────────────────
+  _tagStyle(bg) {
+    return {
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: '10px',
+      fontWeight: 600,
+      color: '#FFFFFF',
+      background: bg,
+      padding: '5px 10px',
+      letterSpacing: '1.5px',
+      textTransform: 'uppercase',
+      whiteSpace: 'nowrap',
+      zIndex: 1,
+    };
+  }
+
+  // ── Translations ─────────────────────────────────────────────
+  tr = {
+    fr: {
+      nav: { home: 'Accueil', projects: 'Projets', services: 'Services', contact: 'Contact' },
+      footer: { tagline: 'Sites web sur mesure et SEO local pour propulser votre entreprise au Québec.', pages: 'Pages' },
+      hero: {
+        badge: 'SEO Local · Québec',
+        title1: "J'aide les PME locales",
+        title2: 'à apparaître en premier',
+        title3: 'sur Google.',
+        titleMain: "Refonte & création de sites web, SEO local & Google My Business — ",
+        titleAccent: "votre visibilité, c'est mon métier.",
+        subtitle: "Gabriel Rakoto — Créateur de sites web & spécialiste SEO local pour les entreprises du Québec.",
+        cta: 'Travaillons ensemble →',
+        ctaSub: 'Voir les projets',
+        ctaLabel: 'TRAVAILLONS ENSEMBLE',
+        cardLine1: 'PME QUÉBÉCOISES',
+        cardLine2: 'RÉSULTATS RÉELS.',
+      },
+      aboutLabel: 'À propos',
+      aboutLabel: 'À propos',
+      about: {
+        bio: "Passionné par le web et le marketing local, j'accompagne les PME québécoises à construire une présence en ligne qui génère de vrais résultats. Je m'occupe du site et du référencement — vous gagnez du temps et des clients.",
+        photoHint: 'Photo',
+        available: 'Disponible',
+        values: ['Design web', 'SEO Local', 'Google My Business', 'Québec'],
+        stats: [
+          { value: '10+', label: 'Projets livrés' },
+          { value: '3+', label: 'Ans d\'expérience' },
+          { value: '100%', label: 'Clients locaux' },
+        ],
+      },
+      servicesLabel: 'Services',
+      projectsLabel: 'Projets',
+      seeServices: 'Voir tous les services →',
+      seeProjects: 'Voir tous les projets',
+      seeProject: 'Voir le projet',
+      projectsHero: 'Réalisations.',
+      servicesHero: 'Ce que\nje fais.',
+      ctaBanner: "Prêt à dominer\nGoogle dans\nvotre ville?",
+      servicesCta: 'Commencer',
+      projectsCta: "Un projet en tête? Parlons-en et trouvons la meilleure approche pour votre entreprise.",
+      services: [
+        {
+          num: '01', icon: '◈',
+          title: 'Site web professionnel',
+          price: '500 $',
+          desc: 'Un site rapide, moderne et optimisé pour convertir vos visiteurs en clients.',
+          points: ['Design sur mesure', 'Responsive mobile-first', 'Hébergement 1 an inclus', 'Formulaire de contact optimisé', 'SEO technique de base'],
+        },
+        {
+          num: '02', icon: '◎',
+          title: 'SEO Local + GMB',
+          price: '150 $/mois',
+          desc: 'Apparaissez en tête des recherches locales et attirez plus de clients dans votre région.',
+          points: ['Optimisation fiche GMB', 'Citations locales (annuaires)', 'Mots-clés géolocalisés', 'Rapport mensuel détaillé', 'Suivi du positionnement'],
+        },
+        {
+          num: '03', icon: '◉',
+          title: 'Site Web + SEO Local',
+          price: '500 $ + 150 $/mois',
+          desc: 'Site professionnel et référencement local combinés pour dominer votre marché.',
+          points: ['Tout inclus dans les 2 offres', 'Priorité de support', 'Stratégie de contenu local', 'Analyse de la concurrence', 'Suivi mensuel personnalisé'],
+        },
+      ],
+      projects: [
+        { tag: 'Réalisation', tagBg: '#1A1A1A', title: 'TBG Paysagiste', niche: 'Aménagement paysager · Québec, QC', desc: 'Création du site web complet pour un paysagiste spécialisé en aménagement extérieur, embellissement de piscines et espaces de rêve dans la région de Québec.', services: ['Site web', 'SEO Local', 'GMB'], img: 'assets/tbg-paysagiste.png', url: 'https://tbg-paysagiste.vercel.app/' },
+        { tag: 'Réalisation', tagBg: '#1A1A1A', title: 'Kami Auto Garage', niche: 'Garage auto · Laval, QC', desc: 'Refonte complète du site web et campagne SEO local pour un garage automobile indépendant.', services: ['Site web', 'SEO Local', 'GMB'], img: 'assets/kami-auto-garage.png', url: 'https://kami-auto-garage.vercel.app/index.html' },
+        { tag: 'Réalisation', tagBg: '#1A1A1A', title: 'Lotus Impérial', niche: 'Restaurant philippin · Montréal, QC', desc: 'Création du site web pour un restaurant de cuisine philippine familiale, avec menu en ligne et réservations.', services: ['Site web', 'SEO Local', 'GMB'], img: 'assets/lotus-imperial.png', url: 'https://delice-de-manille.vercel.app/' },
+        { tag: 'Réalisation', tagBg: '#1A1A1A', title: 'Plomberie Pro', niche: 'Plomberie · Québec, QC', desc: 'Création du site web pour un plombier offrant un service d\'urgence 24/7, avec demande de soumission en ligne.', services: ['Site web', 'SEO Local', 'GMB'], img: 'assets/plomberie-pro.png', url: 'https://designhandoffplomberiepro.vercel.app/' },
+      ],
+      contact: {
+        title: "Parlons de\nvotre projet.",
+        subtitle: "Décrivez votre projet et je vous réponds dans les 24 heures. Pas de prise de tête, juste une vraie conversation.",
+        namePlaceholder: 'Votre nom',
+        emailPlaceholder: 'Votre email',
+        messagePlaceholder: 'Parlez-moi de votre projet...',
+        submit: 'Envoyer →',
+        calendly: '📅  Réserver un appel gratuit',
+        orText: 'ou',
+        successTitle: 'Message envoyé !',
+        successMsg: 'Je vous réponds dans les 24 heures.',
+      },
+    },
+    en: {
+      nav: { home: 'Home', projects: 'Projects', services: 'Services', contact: 'Contact' },
+      footer: { tagline: 'Custom websites and local SEO to grow your business in Quebec.', pages: 'Pages' },
+      hero: {
+        badge: 'Local SEO · Quebec',
+        title1: 'I help local businesses',
+        title2: 'rank first',
+        title3: 'on Google.',
+        titleMain: 'Website design, local SEO & Google My Business — ',
+        titleAccent: 'your visibility is my craft.',
+        subtitle: "Gabriel Rakoto — Web creator & local SEO specialist for Quebec businesses.",
+        cta: "Let's work together →",
+        ctaSub: 'View projects',
+        ctaLabel: "LET'S WORK TOGETHER",
+        cardLine1: 'LOCAL BUSINESSES',
+        cardLine2: 'REAL RESULTS.',
+      },
+      aboutLabel: 'About',
+      about: {
+        bio: "Passionate about web and local marketing, I help Quebec SMEs build an online presence that generates real results. I handle the website and SEO — you save time and gain customers.",
+        photoHint: 'Photo',
+        available: 'Available',
+        values: ['Web Design', 'Local SEO', 'Google My Business', 'Québec'],
+        stats: [
+          { value: '10+', label: 'Projects delivered' },
+          { value: '3+', label: 'Years of experience' },
+          { value: '100%', label: 'Local clients' },
+        ],
+      },
+      servicesLabel: 'Services',
+      projectsLabel: 'Projects',
+      seeServices: 'View all services →',
+      seeProjects: 'View all projects',
+      seeProject: 'View project',
+      projectsHero: 'Projects.',
+      servicesHero: "What\nI do.",
+      ctaBanner: "Ready to rank first\non Google\nin your city?",
+      servicesCta: 'Get started',
+      projectsCta: "Have a project in mind? Let's talk and find the best approach for your business.",
+      services: [
+        {
+          num: '01', icon: '◈',
+          title: 'Professional Website',
+          price: '$500',
+          desc: 'A fast, modern website optimized to convert your visitors into customers.',
+          points: ['Custom design', 'Mobile-first responsive', '1-year hosting included', 'Optimized contact form', 'Basic technical SEO'],
+        },
+        {
+          num: '02', icon: '◎',
+          title: 'Local SEO + GMB',
+          price: '$150/mo',
+          desc: 'Rank at the top of local searches and attract more customers in your area.',
+          points: ['GMB profile optimization', 'Local citations (directories)', 'Geolocalized keywords', 'Detailed monthly report', 'Ranking tracking'],
+        },
+        {
+          num: '03', icon: '◉',
+          title: 'Website + Local SEO',
+          price: '$500 + $150/mo',
+          desc: 'Professional website and local SEO combined to dominate your market.',
+          points: ['Everything in both offers', 'Priority support', 'Local content strategy', 'Competitor analysis', 'Monthly personalized follow-up'],
+        },
+      ],
+      projects: [
+        { tag: 'Project', tagBg: '#1A1A1A', title: 'TBG Paysagiste', niche: 'Landscaping · Québec, QC', desc: 'Full website creation for a landscaping specialist focused on exterior design, pool beautification and outdoor spaces in the Québec region.', services: ['Website', 'Local SEO', 'GMB'], img: 'assets/tbg-paysagiste.png', url: 'https://tbg-paysagiste.vercel.app/' },
+        { tag: 'Project', tagBg: '#1A1A1A', title: 'Kami Auto Garage', niche: 'Auto Garage · Laval, QC', desc: 'Full website redesign and local SEO campaign for an independent auto garage.', services: ['Website', 'Local SEO', 'GMB'], img: 'assets/kami-auto-garage.png', url: 'https://kami-auto-garage.vercel.app/index.html' },
+        { tag: 'Project', tagBg: '#1A1A1A', title: 'Lotus Impérial', niche: 'Filipino Restaurant · Montréal, QC', desc: 'Website creation for a family-style Filipino restaurant, with online menu and reservations.', services: ['Website', 'Local SEO', 'GMB'], img: 'assets/lotus-imperial.png', url: 'https://delice-de-manille.vercel.app/' },
+        { tag: 'Project', tagBg: '#1A1A1A', title: 'Plomberie Pro', niche: 'Plumbing · Québec, QC', desc: 'Website creation for a plumber offering 24/7 emergency service, with online quote requests.', services: ['Website', 'Local SEO', 'GMB'], img: 'assets/plomberie-pro.png', url: 'https://designhandoffplomberiepro.vercel.app/' },
+      ],
+      contact: {
+        title: "Let's talk about\nyour project.",
+        subtitle: "Describe your project and I'll get back to you within 24 hours. No fuss, just a real conversation.",
+        namePlaceholder: 'Your name',
+        emailPlaceholder: 'Your email',
+        messagePlaceholder: 'Tell me about your project...',
+        submit: 'Send →',
+        calendly: '📅  Book a free call',
+        orText: 'or',
+        successTitle: 'Message sent!',
+        successMsg: "I'll get back to you within 24 hours.",
+      },
+    },
+  };
+
+
+
+
+
+  _setupProjReveal() {
+    if (this._projScrollHandler) {
+      window.removeEventListener('scroll', this._projScrollHandler);
+      this._projScrollHandler = null;
+    }
+    if (this._projRevealObserver) {
+      this._projRevealObserver.disconnect();
+      this._projRevealObserver = null;
+    }
+
+    const lang = this.state.lang;
+    const projs = this.tr[lang].projects.slice(0, 4);
+    const n = projs.length;
+
+    const spacer = document.getElementById('proj-scroll-spacer');
+    const stage  = document.getElementById('proj-stage');
+    const cards  = Array.from(document.querySelectorAll('.proj-stacked-card'));
+
+    if (!spacer || !stage || !cards.length) {
+      setTimeout(() => this._setupProjReveal(), 150);
+      return;
+    }
+
+    // Set background images
+    cards.forEach((card, i) => {
+      const bg = card.querySelector('.proj-screen-bg');
+      if (bg && projs[i] && projs[i].img) {
+        bg.style.backgroundImage = `url(${projs[i].img})`;
+        bg.style.backgroundSize = 'cover';
+        bg.style.backgroundPosition = 'center';
+      }
+    });
+
+    const easeOutQuint  = t => 1 - Math.pow(1 - t, 5);
+    const easeOutQuad   = t => 1 - (1 - t) * (1 - t);
+    const easeOutCubic  = t => 1 - Math.pow(1 - t, 3);
+    const TRANS = 'transform 0.18s cubic-bezier(0.25,1,0.5,1), opacity 0.18s ease-out';
+
+    let _ready = false;
+
+    const onScroll = () => {
+      const rect    = spacer.getBoundingClientRect();
+      const viewH   = window.innerHeight;
+      const spacerH = spacer.offsetHeight;
+      const scrolled = -rect.top;
+
+      const active = scrolled >= 0 && scrolled <= spacerH - viewH;
+
+      if (!active) {
+        stage.style.opacity = '0';
+        stage.style.pointerEvents = 'none';
+        stage.style.visibility = 'hidden'; // blocks children with pointer-events:auto too
+        return;
+      }
+
+      stage.style.visibility = 'visible';
+      stage.style.opacity = '1';
+      stage.style.pointerEvents = 'auto';
+
+      const perCard = (spacerH - viewH) / n;
+
+      cards.forEach((card, i) => {
+        // local: 0 = card's scroll zone starts, 1 = ends
+        const local = (scrolled - i * perCard) / perCard;
+
+        // Each card entry starts 0.35 early (overlaps with prev card's exit)
+        // First card has no overlap
+        const entryStart = i === 0 ? 0 : -0.35;
+
+        if (local < entryStart - 0.02 || local > 1.02) {
+          card.style.opacity = '0';
+          card.style.pointerEvents = 'none';
+          card.style.zIndex = '0';
+          return;
+        }
+
+        card.style.pointerEvents = 'auto';
+
+        card.style.transition = _ready ? TRANS : 'none';
+
+        if (local < 0) {
+          // ── Entry: rises from below (rotateX 55→0)
+          const t    = Math.max(0, (local - entryStart) / (0 - entryStart));
+          const ease = easeOutCubic(Math.min(1, t));
+          const rotX = (55 * (1 - ease)).toFixed(2);
+          const sc   = (0.92 + 0.08 * ease).toFixed(4);
+          // opacity tracks rotation: only becomes opaque once mostly upright
+          card.style.opacity   = Math.min(1, ease * 1.5).toFixed(3);
+          card.style.transform = `perspective(900px) rotateX(${rotX}deg) scale(${sc})`;
+          card.style.zIndex    = '1';
+
+        } else if (local < 0.35 && i === 0) {
+          // ── First card: rises straight from below
+          const ease = easeOutCubic(Math.min(1, local / 0.35));
+          const rotX = (55 * (1 - ease)).toFixed(2);
+          const sc   = (0.92 + 0.08 * ease).toFixed(4);
+          card.style.opacity   = Math.min(1, ease * 1.5).toFixed(3);
+          card.style.transform = `perspective(900px) rotateX(${rotX}deg) scale(${sc})`;
+          card.style.zIndex    = '2';
+
+        } else if (local < 0.65) {
+          // ── Hold flat
+          card.style.opacity   = '1';
+          card.style.transform = 'none';
+          card.style.zIndex    = '2';
+
+        } else {
+          // ── Exit: folds forward-down (top toward viewer, sweeps away)
+          const t    = Math.min(1, (local - 0.65) / 0.35);
+          const ease = easeOutQuad(t);
+          const rotX = (-80 * ease).toFixed(2);
+          const sc   = (1 - 0.08 * ease).toFixed(4);
+          card.style.opacity   = Math.max(0, 1 - ease * 1.3).toFixed(3);
+          card.style.transform = `perspective(900px) rotateX(${rotX}deg) scale(${sc})`;
+          card.style.zIndex    = '3';
+        }
+      });
+    };
+
+    this._projScrollHandler = onScroll;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();        // sets initial positions without transition
+    requestAnimationFrame(() => { _ready = true; }); // enable transition after first paint
+  }
+
+  _setupProjectsPageReveal() {
+    if (this._projPageRAF) {
+      cancelAnimationFrame(this._projPageRAF);
+      this._projPageRAF = null;
+    }
+
+    const spacer = document.getElementById('projpage-scroll-spacer');
+    const stage  = document.getElementById('projpage-stage');
+    const cards  = Array.from(document.querySelectorAll('.projpage-stacked-card'));
+
+    if (!spacer || !stage || !cards.length) {
+      setTimeout(() => this._setupProjectsPageReveal(), 150);
+      return;
+    }
+
+    const n = cards.length;
+    const easeOutQuad  = t => 1 - (1 - t) * (1 - t);
+    const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+    const TRANS = 'transform 0.18s cubic-bezier(0.25,1,0.5,1), opacity 0.18s ease-out';
+    let _ready = false;
+
+    const tick = () => {
+      if (this.state.page !== 'projects') { this._projPageRAF = null; return; }
+      const rect    = spacer.getBoundingClientRect();
+      const viewH   = window.innerHeight;
+      const spacerH = spacer.offsetHeight;
+      const scrolled = -rect.top;
+
+      const active = scrolled >= 0 && scrolled <= spacerH - viewH;
+
+      if (!active) {
+        stage.style.opacity = '0';
+        stage.style.pointerEvents = 'none';
+        stage.style.visibility = 'hidden';
+      } else {
+        stage.style.visibility = 'visible';
+        stage.style.opacity = '1';
+        stage.style.pointerEvents = 'auto';
+
+        const perCard = (spacerH - viewH) / n;
+
+        cards.forEach((card, i) => {
+          const local = (scrolled - i * perCard) / perCard;
+          const entryStart = i === 0 ? 0 : -0.3;
+
+          if (local < entryStart - 0.02 || local > 1.02) {
+            card.style.opacity = '0';
+            card.style.pointerEvents = 'none';
+            card.style.zIndex = '0';
+            return;
+          }
+
+          card.style.pointerEvents = 'auto';
+          card.style.transition = _ready ? TRANS : 'none';
+
+          if (local < 0) {
+            const t    = Math.max(0, (local - entryStart) / (0 - entryStart));
+            const ease = easeOutCubic(Math.min(1, t));
+            const ty   = (44 * (1 - ease)).toFixed(2);
+            card.style.opacity   = Math.min(1, ease * 1.5).toFixed(3);
+            card.style.transform = `translateY(${ty}px)`;
+            card.style.zIndex    = '2';
+
+          } else if (local < 0.3 && i === 0) {
+            const ease = easeOutCubic(Math.min(1, local / 0.3));
+            const ty   = (44 * (1 - ease)).toFixed(2);
+            card.style.opacity   = Math.min(1, ease * 1.5).toFixed(3);
+            card.style.transform = `translateY(${ty}px)`;
+            card.style.zIndex    = '2';
+
+          } else if (local < 0.7) {
+            card.style.opacity   = '1';
+            card.style.transform = 'none';
+            card.style.zIndex    = '2';
+
+          } else {
+            const t    = Math.min(1, (local - 0.7) / 0.3);
+            const ease = easeOutQuad(t);
+            const ty   = (-44 * ease).toFixed(2);
+            card.style.opacity   = Math.max(0, 1 - ease * 1.3).toFixed(3);
+            card.style.transform = `translateY(${ty}px)`;
+            card.style.zIndex    = '1';
+          }
+        });
+      }
+
+      _ready = true;
+      this._projPageRAF = requestAnimationFrame(tick);
+    };
+
+    tick();
+  }
+
+  renderVals() {
+    const { page, lang, scrolled, menuOpen, isMobile, formSubmitted } = this.state;
+    const t = this.tr[lang];
+
+    const projects = t.projects.map(p => {
+      const baseBg = 'repeating-linear-gradient(45deg, #F5F5F5, #F5F5F5 10px, #F5F5F5 10px, #F5F5F5 20px)';
+      const imgBg = p.img ? `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${p.img}) center/cover no-repeat` : baseBg;
+      const stackImgBg = p.img ? `url(${p.img}) center/cover no-repeat` : baseBg;
+      return {
+        ...p,
+        tagStyle: this._tagStyle(p.tagBg),
+        onClick: p.url ? () => window.open(p.url, '_blank') : () => this.goTo('projects'),
+        laptopScreen: p.img
+          ? { backgroundImage: `url(${p.img})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%' }
+          : { background: 'repeating-linear-gradient(45deg, #EAEAEA, #EAEAEA 10px, #F0F0F0 10px, #F0F0F0 20px)', width: '100%', height: '100%' },
+        homeCardStyle: {
+          height: '220px',
+          background: imgBg,
+          border: '1px solid #EDEDED',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-end',
+          padding: '16px',
+          marginBottom: '20px',
+          overflow: 'hidden',
+        },
+        stackCardStyle: {
+          width: '100%',
+          maxWidth: '420px',
+          aspectRatio: '1905 / 1198',
+          flex: '0 1 300px',
+          background: stackImgBg,
+          borderRadius: '14px',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-end',
+          padding: '16px',
+          overflow: 'hidden',
+        },
+        projCardStyle: {
+          height: '260px',
+          background: imgBg,
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          padding: '20px',
+          position: 'relative',
+        },
+      };
+    });
+
+    return {
+      t,
+      langLabel: lang === 'fr' ? 'EN' : 'FR',
+      isHome:     page === 'home',
+      isProjects: page === 'projects',
+      isServices: page === 'services',
+      isContact:  page === 'contact',
+      isDesktop: !isMobile,
+      isMobile,
+      menuOpen,
+      scrolled,
+      formSubmitted,
+      formNotSubmitted: !formSubmitted,
+      homePageStyle: { display: page === 'home' ? 'block' : 'none' },
+      navStyle: {
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        height: '68px', padding: '0 clamp(20px, 4vw, 72px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        borderBottom: '1px solid #EDEDED',
+        background: scrolled ? 'rgba(255,255,255,0.96)' : '#FFFFFF',
+        backdropFilter: 'blur(16px)', transition: 'background 0.4s',
+        animation: 'navIn 0.7s cubic-bezier(0.16,1,0.3,1) both',
+      },
+
+      homeNavStyle:     { fontFamily: "'DM Sans',sans-serif", fontSize: '14px', fontWeight: 500, color: page==='home'     ? '#111111':'#666', padding: '8px 18px', borderRadius: '100px', letterSpacing: '0.2px', transition: 'color 0.2s, background 0.2s' },
+      projectsNavStyle: { fontFamily: "'DM Sans',sans-serif", fontSize: '14px', fontWeight: 500, color: page==='projects' ? '#111111':'#666', padding: '8px 18px', borderRadius: '100px', letterSpacing: '0.2px', transition: 'color 0.2s, background 0.2s' },
+      servicesNavStyle: { fontFamily: "'DM Sans',sans-serif", fontSize: '14px', fontWeight: 500, color: page==='services' ? '#111111':'#666', padding: '8px 18px', borderRadius: '100px', letterSpacing: '0.2px', transition: 'color 0.2s, background 0.2s' },
+      contactNavStyle:  { fontFamily: "'DM Sans',sans-serif", fontSize: '14px', fontWeight: 500, color: page==='contact'  ? '#111111':'#666', padding: '8px 18px', borderRadius: '100px', letterSpacing: '0.2px', transition: 'color 0.2s, background 0.2s' },
+
+      services: t.services.map(s => {
+        const mid = s.num === '02';
+        return {
+          ...s,
+          isFirst: s.num === '01', isSecond: s.num === '02', isThird: s.num === '03',
+          pointColor: mid ? '#999' : '#666',
+          cardStyle: {
+            background: 'transparent',
+            borderLeft: s.num === '01' ? 'none' : '1px solid #E5E5E5',
+            padding: 'clamp(28px, 3vw, 40px)',
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'relative',
+          },
+          ctaStyle: {
+            fontFamily: "'Syne', sans-serif", fontSize: '14px', fontWeight: 700,
+            color: '#111111',
+            background: 'transparent',
+            border: '1px solid #2A2A2A',
+            padding: '15px 20px', borderRadius: '100px', letterSpacing: '0.2px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px',
+            transition: 'background 0.2s, color 0.2s, border-color 0.2s', width: '100%',
+          },
+          ctaIconStyle: {
+            width: '26px', height: '26px', borderRadius: '50%', flexShrink: 0,
+            transition: 'transform 0.2s',
+            background: '#111111', color: '#FFFFFF',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px',
+          },
+        };
+      }),
+      projects,
+      homeProjects: projects.slice(0, 4),
+      projectsStack: projects.map((p, i) => ({ ...p, zIndex: i + 1, onClick: p.url ? () => window.open(p.url, '_blank') : () => this.goTo('projects') })),
+
+      // Handlers
+      goHome:     () => this.goTo('home'),
+      goProjects: () => this.goTo('projects'),
+      goServices: () => this.goTo('services'),
+      goContact:  () => this.goTo('contact'),
+      toggleLang: () => this.setState({ lang: lang === 'fr' ? 'en' : 'fr' }),
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu:  () => this.setState({ menuOpen: false }),
+      goHomeMobile:     () => this.goTo('home',     { menuOpen: false }),
+      goProjectsMobile: () => this.goTo('projects', { menuOpen: false }),
+      goServicesMobile: () => this.goTo('services', { menuOpen: false }),
+      goContactMobile:  () => this.goTo('contact',  { menuOpen: false }),
+      handleSubmit: e => { e.preventDefault(); this.setState({ formSubmitted: true }); },
+    };
+  }
+}
+</script>
+</body>
+</html>
