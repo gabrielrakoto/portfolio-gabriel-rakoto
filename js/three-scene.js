@@ -81,6 +81,7 @@ function initHeroScene() {
   let targetRotX = 0;
   let targetRotY = 0;
   let autoAngle = 0;
+  let heroVisible = false;
 
   function initThree() {
     if (typeof THREE === "undefined") return;
@@ -145,8 +146,16 @@ function initHeroScene() {
     );
 
     resizeThree();
-    canvas3d.addEventListener("mouseleave", () => { targetRotY = 0; targetRotX = 0; });
-    canvas3d.addEventListener("mousemove", onMouseMove);
+    heroSection.addEventListener("mouseleave", () => { targetRotY = 0; targetRotX = 0; });
+    heroSection.addEventListener("mousemove", onMouseMove);
+
+    canvas3d.addEventListener("webglcontextlost", (e) => {
+      e.preventDefault();
+      stopThree();
+    });
+    canvas3d.addEventListener("webglcontextrestored", () => {
+      if (heroVisible) startThree();
+    });
   }
 
   function onMouseMove(e) {
@@ -202,7 +211,8 @@ function initHeroScene() {
 
   const heroVisibilityObserver = new IntersectionObserver(
     ([entry]) => {
-      if (entry.isIntersecting) {
+      heroVisible = entry.isIntersecting;
+      if (heroVisible) {
         startStars();
         startThree();
       } else {
@@ -213,4 +223,11 @@ function initHeroScene() {
     { threshold: 0 }
   );
   heroVisibilityObserver.observe(heroSection);
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && heroVisible) {
+      startStars();
+      startThree();
+    }
+  });
 }
