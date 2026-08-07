@@ -140,7 +140,7 @@ function initHeroScene() {
         geo.center();
         const mat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.88, roughness: 0.18 });
         textMesh = new THREE.Mesh(geo, mat);
-        textMesh.rotation.y = 1.1;
+        textMesh.rotation.y = 0.15;
         scene.add(textMesh);
       }
     );
@@ -182,7 +182,7 @@ function initHeroScene() {
     threeRAF = requestAnimationFrame(animateThree);
     if (textMesh) {
       autoAngle += 0.003;
-      const baseY = 1.1 + Math.sin(autoAngle) * 0.35;
+      const baseY = 0.15 + Math.sin(autoAngle) * 0.15;
       const baseX = Math.cos(autoAngle * 0.7) * 0.08;
       textMesh.rotation.y += (baseY + targetRotY - textMesh.rotation.y) * 0.08;
       textMesh.rotation.x += (baseX + targetRotX - textMesh.rotation.x) * 0.08;
