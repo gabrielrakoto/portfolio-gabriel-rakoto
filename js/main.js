@@ -263,7 +263,7 @@ function createStackedReveal({ spacerId, stageId, cardSelector, tickerId, pageKe
     const rect = spacer.getBoundingClientRect();
     const spacerH = spacer.offsetHeight;
     const viewH = window.innerHeight;
-    const active = rect.top < viewH && rect.bottom > 0;
+    const active = rect.top <= 0 && rect.bottom > 0;
 
     stage.classList.toggle("is-visible", active);
     if (!active) return;
