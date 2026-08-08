@@ -232,14 +232,14 @@ function cardPhase(local) {
   if (local <= -0.15 || local >= 1.15) {
     return { opacity: 0, rotateX: local < 0 ? 55 : -80, translateY: local < 0 ? 44 : -44 };
   }
-  if (local < 0.35) {
-    const p = clamp01(local / 0.35);
+  if (local < 0.18) {
+    const p = clamp01(local / 0.18);
     return { opacity: p, rotateX: lerp(55, 0, p), translateY: lerp(44, 0, p) };
   }
-  if (local < 0.65) {
+  if (local < 0.82) {
     return { opacity: 1, rotateX: 0, translateY: 0 };
   }
-  const p = clamp01((local - 0.65) / 0.35);
+  const p = clamp01((local - 0.82) / 0.18);
   return { opacity: 1 - p, rotateX: lerp(0, -80, p), translateY: lerp(0, -44, p) };
 }
 
