@@ -3,7 +3,7 @@
 const PROJECTS = [
   {
     id: "tbg",
-    img: "assets/tbg-paysagiste.jpg",
+    img: "assets/paysagement-pro.jpg",
     url: "https://tbg-paysagiste.vercel.app/",
   },
   {
