@@ -34,7 +34,6 @@
   --radius-pill: 100px;
   --radius-card: 16px;
   --radius-card-lg: 28px;
-  --radius-card-3d: 30px;
 
   --nav-h: 68px;
   --pad-x: clamp(20px, 5vw, 72px);
@@ -704,7 +703,7 @@ h1, h2, h3, p { margin: 0; }
   margin-bottom: 14px;
 }
 .proj-home-card {
-  border-radius: var(--radius-card-3d);
+  border-radius: 4px;
   background: var(--c-tag-bg);
   color: var(--c-white);
   overflow: hidden;
