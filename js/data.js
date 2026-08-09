@@ -4,17 +4,17 @@ const PROJECTS = [
   {
     id: "tbg",
     img: "assets/paysagement-pro.jpg",
-    url: "https://tbg-paysagiste.vercel.app/",
+    url: "https://paysagementpro.vercel.app/",
   },
   {
     id: "kami",
     img: "assets/kami-auto-garage.jpg",
-    url: "https://kami-auto-garage.vercel.app/index.html",
+    url: "https://kami-auto-garage.vercel.app/",
   },
   {
     id: "lotus",
     img: "assets/lotus-imperial.jpg",
-    url: "https://delice-de-manille.vercel.app/",
+    url: "https://lotusimperial.vercel.app/",
   },
   {
     id: "plomberie",
