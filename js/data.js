@@ -111,7 +111,7 @@ const I18N = {
     projects: [
       {
         tag: "Réalisation",
-        title: "TBG Paysagiste",
+        title: "Paysagement pro",
         niche: "Aménagement paysager · Québec, QC",
         desc: "Création du site web complet pour un paysagiste spécialisé en aménagement extérieur, embellissement de piscines et espaces de rêve dans la région de Québec.",
         services: ["Site web", "SEO Local", "GMB"],
@@ -235,7 +235,7 @@ const I18N = {
     projects: [
       {
         tag: "Project",
-        title: "TBG Paysagiste",
+        title: "Paysagement pro",
         niche: "Landscaping · Québec, QC",
         desc: "Full website creation for a landscaping specialist focused on exterior design, pool beautification and outdoor spaces in the Québec region.",
         services: ["Website", "Local SEO", "GMB"],
