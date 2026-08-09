@@ -340,54 +340,94 @@ function setupCardReveal() {
 }
 
 /* ---------- Glitch hover (cartes services Home) ---------- */
+const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!%&";
+
 function scrambleText(el) {
-  const original = el.textContent;
-  const chars = "01#*+-◆◇○●";
-  const totalFrames = 12;
-  let frame = 0;
-  const interval = setInterval(() => {
-    frame++;
-    if (frame >= totalFrames) {
-      el.textContent = original;
-      clearInterval(interval);
-      return;
-    }
+  if (el._scrambleRaf) cancelAnimationFrame(el._scrambleRaf);
+  if (!el.dataset.orig) el.dataset.orig = el.textContent;
+  const original = el.dataset.orig;
+  const duration = 400;
+  const start = performance.now();
+  function step(now) {
+    const p = clamp01((now - start) / duration);
+    const resolved = Math.floor(p * original.length);
     el.textContent = original
       .split("")
-      .map((c, i) => (i < frame ? c : chars[Math.floor(Math.random() * chars.length)]))
+      .map((c, i) => (i < resolved ? c : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]))
       .join("");
-  }, 400 / totalFrames);
+    if (p < 1) {
+      el._scrambleRaf = requestAnimationFrame(step);
+    } else {
+      el.textContent = original;
+      el._scrambleRaf = null;
+    }
+  }
+  el._scrambleRaf = requestAnimationFrame(step);
+}
+
+function resetScramble(el) {
+  if (el._scrambleRaf) {
+    cancelAnimationFrame(el._scrambleRaf);
+    el._scrambleRaf = null;
+  }
+  if (el.dataset.orig) el.textContent = el.dataset.orig;
 }
 
 function animateDisplacement(card, filterEl) {
-  const duration = 420;
-  const peakScale = 35;
+  if (card._glitchRaf) cancelAnimationFrame(card._glitchRaf);
+  const duration = 350;
+  const peakScale = 5;
   const start = performance.now();
-  card.classList.add("is-glitching");
+  card.style.filter = "url(#svc-glitch)";
   function step(now) {
     const p = Math.min((now - start) / duration, 1);
-    const scale = p < 0.5 ? (p / 0.5) * peakScale : (1 - (p - 0.5) / 0.5) * peakScale;
+    const scale = p < 0.4 ? (p / 0.4) * peakScale : (1 - (p - 0.4) / 0.6) * peakScale;
     filterEl.setAttribute("scale", scale.toFixed(2));
     if (p < 1) {
-      requestAnimationFrame(step);
+      card._glitchRaf = requestAnimationFrame(step);
     } else {
       filterEl.setAttribute("scale", "0");
-      card.classList.remove("is-glitching");
+      card.style.filter = "";
+      card._glitchRaf = null;
     }
   }
-  requestAnimationFrame(step);
+  card._glitchRaf = requestAnimationFrame(step);
+}
+
+function resetDisplacement(card, filterEl) {
+  if (card._glitchRaf) {
+    cancelAnimationFrame(card._glitchRaf);
+    card._glitchRaf = null;
+  }
+  if (filterEl) filterEl.setAttribute("scale", "0");
+  card.style.filter = "";
 }
 
 function setupGlitch() {
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return;
   const filterEl = document.querySelector("#svc-glitch feDisplacementMap");
   document.querySelectorAll(".svc-card, .svc-page-card").forEach((card) => {
-    const numEl = card.querySelector(".svc-num");
-    function trigger() {
-      if (numEl) scrambleText(numEl);
+    const tagEl = card.querySelector(".svc-num");
+    if (card._glitchEnter) card.removeEventListener("mouseenter", card._glitchEnter);
+    if (card._glitchLeave) {
+      card.removeEventListener("mouseleave", card._glitchLeave);
+      card.removeEventListener("touchend", card._glitchLeave);
+    }
+    function onEnter() {
+      if (tagEl) scrambleText(tagEl);
       if (filterEl) animateDisplacement(card, filterEl);
     }
-    card.addEventListener("mouseenter", trigger);
-    card.addEventListener("touchstart", trigger, { passive: true });
+    function onLeave() {
+      if (tagEl) resetScramble(tagEl);
+      if (filterEl) resetDisplacement(card, filterEl);
+    }
+    card._glitchEnter = onEnter;
+    card._glitchLeave = onLeave;
+    card.addEventListener("mouseenter", onEnter);
+    card.addEventListener("touchstart", onEnter, { passive: true });
+    card.addEventListener("mouseleave", onLeave);
+    card.addEventListener("touchend", onLeave);
   });
 }
 

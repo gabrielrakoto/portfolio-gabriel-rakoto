@@ -530,8 +530,6 @@ h1, h2, h3, p { margin: 0; }
   position: relative;
 }
 .svc-card.scroll-visible { opacity: 1; transform: translateY(0); }
-.svc-card.is-glitching,
-.svc-page-card.is-glitching { filter: url(#svc-glitch); }
 .svc-visual {
   height: 120px;
   border-radius: 10px;
