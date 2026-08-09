@@ -88,21 +88,26 @@ function buildHomeProjectCards() {
     const svcCount = I18N.fr.projects[i].services.length;
     return `
     <div class="proj-stacked-card" data-card-index="${i}">
-      <div class="proj-home-card">
-        <span class="proj-tag" data-i18n="projects.${i}.tag"></span>
-        <a class="proj-visit" href="${p.url}" target="_blank" rel="noopener noreferrer" data-i18n="visit"></a>
-        <img class="proj-screen-bg" src="${p.img}" alt="" loading="lazy">
-        <div class="proj-home-info">
-          <div class="proj-niche" data-i18n="projects.${i}.niche"></div>
-          <div class="proj-home-title" data-i18n="projects.${i}.title"></div>
-          <div class="proj-tags">
-            ${Array.from({ length: svcCount }, (_, j) => `<span data-i18n="projects.${i}.services.${j}"></span>`).join("")}
+      <div class="proj-card-wrap">
+        <div class="proj-card-head">
+          <span class="proj-tag" data-i18n="projects.${i}.tag"></span>
+          <a class="proj-visit" href="${p.url}" target="_blank" rel="noopener noreferrer" data-i18n="visit"></a>
+        </div>
+        <div class="proj-home-card">
+          <img class="proj-screen-bg" src="${p.img}" alt="" loading="lazy">
+          <div class="proj-home-info">
+            <div class="proj-niche" data-i18n="projects.${i}.niche"></div>
+            <div class="proj-home-title" data-i18n="projects.${i}.title"></div>
+            <div class="proj-tags">
+              ${Array.from({ length: svcCount }, (_, j) => `<span data-i18n="projects.${i}.services.${j}"></span>`).join("")}
+            </div>
           </div>
         </div>
       </div>
     </div>`;
   }).join("");
-  stage.innerHTML = `<div class="stack-ticker" id="proj-ticker">${buildProjectTicker()}</div>` + cardsHtml;
+  const tickerText = buildProjectTicker();
+  stage.innerHTML = `<div class="stack-ticker"><div class="stack-ticker-track"><span>${tickerText}</span><span>${tickerText}</span></div></div>` + cardsHtml;
 }
 
 function buildProjectsPageCards() {
@@ -126,7 +131,8 @@ function buildProjectsPageCards() {
       </div>
     </div>`;
   }).join("");
-  stage.innerHTML = `<div class="stack-ticker" id="projpage-ticker">${buildProjectTicker()}</div>` + cardsHtml;
+  const tickerText = buildProjectTicker();
+  stage.innerHTML = `<div class="stack-ticker"><div class="stack-ticker-track"><span>${tickerText}</span><span>${tickerText}</span></div></div>` + cardsHtml;
 }
 
 /* ---------- i18n ---------- */
@@ -243,16 +249,14 @@ function cardPhase(local) {
   return { opacity: 1 - p, rotateX: lerp(0, -80, p), translateY: lerp(0, -44, p) };
 }
 
-function createStackedReveal({ spacerId, stageId, cardSelector, tickerId, pageKey }) {
+function createStackedReveal({ spacerId, stageId, cardSelector, pageKey }) {
   const spacer = document.getElementById(spacerId);
   const stage = document.getElementById(stageId);
   const cards = stage ? Array.from(stage.querySelectorAll(cardSelector)) : [];
-  const ticker = tickerId ? document.getElementById(tickerId) : null;
   if (!spacer || !stage || !cards.length) return null;
 
   const n = cards.length;
   const perCard = 1 / n;
-  let tickerWidth = 0;
 
   function update() {
     if (pageKey && state.page !== pageKey) {
@@ -278,12 +282,6 @@ function createStackedReveal({ spacerId, stageId, cardSelector, tickerId, pageKe
       card.style.transform = `perspective(1200px) translateY(${translateY}px) rotateX(${rotateX}deg)`;
       card.style.zIndex = i + 1;
     });
-
-    if (ticker) {
-      if (!tickerWidth) tickerWidth = ticker.scrollWidth;
-      const maxShift = Math.max(tickerWidth - window.innerWidth, 0);
-      ticker.style.transform = `translateY(-50%) translateX(${-progress * maxShift}px)`;
-    }
   }
 
   return { update };
@@ -465,8 +463,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCardReveal();
   setupGlitch();
 
-  const homeReveal = createStackedReveal({ spacerId: "proj-scroll-spacer", stageId: "proj-stage", cardSelector: ".proj-stacked-card", tickerId: "proj-ticker", pageKey: "home" });
-  const projectsReveal = createStackedReveal({ spacerId: "projpage-scroll-spacer", stageId: "projpage-stage", cardSelector: ".projpage-card", tickerId: "projpage-ticker", pageKey: "projects" });
+  const homeReveal = createStackedReveal({ spacerId: "proj-scroll-spacer", stageId: "proj-stage", cardSelector: ".proj-stacked-card", pageKey: "home" });
+  const projectsReveal = createStackedReveal({ spacerId: "projpage-scroll-spacer", stageId: "projpage-stage", cardSelector: ".projpage-card", pageKey: "projects" });
   stackedRevealModules = [homeReveal, projectsReveal].filter(Boolean);
 
   initNavScroll();

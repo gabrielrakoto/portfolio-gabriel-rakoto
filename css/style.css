@@ -669,21 +669,41 @@ h1, h2, h3, p { margin: 0; }
   position: absolute;
   top: 50%;
   left: 0;
+  width: 100%;
   transform: translateY(-50%);
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.stack-ticker-track {
+  display: flex;
+  width: max-content;
   white-space: nowrap;
   font-family: var(--f-title);
   font-weight: 800;
   font-size: 20vw;
   line-height: 1;
   color: var(--c-border);
-  z-index: 0;
   user-select: none;
   will-change: transform;
+  animation: stackTickerScroll 40s linear infinite;
 }
-.proj-home-card {
+@keyframes stackTickerScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.proj-card-wrap {
   position: relative;
   z-index: 1;
-  width: min(680px, 86vw);
+  width: min(480px, 72vw);
+}
+.proj-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.proj-home-card {
   border-radius: var(--radius-card-3d);
   background: var(--c-tag-bg);
   color: var(--c-white);
@@ -691,11 +711,8 @@ h1, h2, h3, p { margin: 0; }
   box-shadow: 0 30px 80px rgba(0,0,0,0.25);
 }
 .proj-tag {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 2;
-  background: rgba(255,255,255,0.12);
+  background: var(--c-black);
+  color: var(--c-white);
   padding: 6px 14px;
   border-radius: var(--radius-pill);
   font-size: 11px;
@@ -703,12 +720,9 @@ h1, h2, h3, p { margin: 0; }
   text-transform: uppercase;
 }
 .proj-visit {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 2;
   font-size: 13px;
   font-weight: 500;
+  color: var(--c-black);
   transition: transform 0.2s;
 }
 .proj-visit:hover { transform: translate(2px, -2px); }
