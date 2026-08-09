@@ -8,6 +8,8 @@ let stackedRevealModules = [];
 /* ---------- Helpers ---------- */
 function clamp01(v) { return Math.min(1, Math.max(0, v)); }
 function lerp(a, b, t) { return a + (b - a) * t; }
+function easeOutCubic(p) { return 1 - Math.pow(1 - p, 3); }
+function easeOutQuad(p) { return 1 - (1 - p) * (1 - p); }
 
 function t(lang, path) {
   return path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), I18N[lang]);
@@ -176,7 +178,7 @@ function setPage(page, opts) {
 
   closeMobileMenu();
   if (!opts.skipScroll) window.scrollTo({ top: 0, behavior: "auto" });
-  stackedRevealModules.forEach((m) => m.update());
+  stackedRevealModules.forEach((m) => m.start());
 }
 
 function wireNavigation() {
@@ -219,7 +221,6 @@ function initNavScroll() {
   function tick() {
     const y = window.scrollY;
     if (nav) nav.classList.toggle("nav-solid", y > 40);
-    stackedRevealModules.forEach((m) => m.update());
     ticking = false;
   }
 
@@ -234,58 +235,103 @@ function initNavScroll() {
   onScroll();
 }
 
-/* ---------- Stacked scroll reveal (factorisé, réutilisé Home + Projects) ---------- */
-function cardPhase(local) {
-  if (local <= -0.15 || local >= 1.15) {
-    return { opacity: 0, rotateX: local < 0 ? 55 : -80, translateY: local < 0 ? 44 : -44 };
+/* ---------- Stacked scroll reveal (boucle rAF autonome, factorisé Home + Projects) ---------- */
+function cardPhase(local, isFirst) {
+  if (local < -0.32 || local > 1.02) {
+    return { opacity: 0, translateY: 0, zIndex: 0, interactive: false };
   }
-  if (local < 0.18) {
-    const p = clamp01(local / 0.18);
-    return { opacity: p, rotateX: lerp(55, 0, p), translateY: lerp(44, 0, p) };
+  const entryEnd = isFirst ? 0.3 : 0;
+  if (local < entryEnd) {
+    const entryStart = isFirst ? 0 : -0.3;
+    const p = easeOutCubic(clamp01((local - entryStart) / (entryEnd - entryStart)));
+    return { opacity: clamp01(p * 1.5), translateY: lerp(44, 0, p), zIndex: 2, interactive: true };
   }
-  if (local < 0.82) {
-    return { opacity: 1, rotateX: 0, translateY: 0 };
+  if (local >= 0.7) {
+    const p = easeOutQuad(clamp01((local - 0.7) / 0.3));
+    return { opacity: clamp01(1 - p * 1.3), translateY: lerp(0, -44, p), zIndex: 1, interactive: true };
   }
-  const p = clamp01((local - 0.82) / 0.18);
-  return { opacity: 1 - p, rotateX: lerp(0, -80, p), translateY: lerp(0, -44, p) };
+  return { opacity: 1, translateY: 0, zIndex: 2, interactive: true };
 }
 
 function createStackedReveal({ spacerId, stageId, cardSelector, pageKey }) {
-  const spacer = document.getElementById(spacerId);
-  const stage = document.getElementById(stageId);
-  const cards = stage ? Array.from(stage.querySelectorAll(cardSelector)) : [];
-  if (!spacer || !stage || !cards.length) return null;
+  let spacer = null;
+  let stage = null;
+  let cards = [];
+  let perCard = 1;
+  let rafId = null;
+  let ready = false;
 
-  const n = cards.length;
-  const perCard = 1 / n;
+  function resolveEls() {
+    spacer = document.getElementById(spacerId);
+    stage = document.getElementById(stageId);
+    cards = stage ? Array.from(stage.querySelectorAll(cardSelector)) : [];
+    if (!spacer || !stage || !cards.length) return false;
+    perCard = 1 / cards.length;
+    return true;
+  }
 
-  function update() {
-    if (pageKey && state.page !== pageKey) {
-      stage.classList.remove("is-visible");
+  function hideStage() {
+    stage.style.opacity = "0";
+    stage.style.visibility = "hidden";
+    stage.style.pointerEvents = "none";
+  }
+
+  function applyCards(progress) {
+    cards.forEach((card, i) => {
+      const local = (progress - i * perCard) / perCard;
+      const ph = cardPhase(local, i === 0);
+      card.style.transform = ph.translateY === 0 ? "none" : `translateY(${ph.translateY}px)`;
+      card.style.opacity = ph.opacity;
+      card.style.zIndex = ph.zIndex;
+      card.style.pointerEvents = ph.interactive ? "auto" : "none";
+    });
+  }
+
+  function frame() {
+    if (state.page !== pageKey) {
+      rafId = null; // auto-annulation : on quitte la page, pas de reschedule
       return;
     }
 
     const rect = spacer.getBoundingClientRect();
     const spacerH = spacer.offsetHeight;
     const viewH = window.innerHeight;
-    const active = rect.top <= 0 && rect.bottom > 0;
-
-    stage.classList.toggle("is-visible", active);
-    if (!active) return;
-
     const scrolled = -rect.top;
-    const progress = clamp01(scrolled / Math.max(spacerH - viewH, 1));
+    const range = Math.max(spacerH - viewH, 1);
 
-    cards.forEach((card, i) => {
-      const local = (progress - i * perCard) / perCard;
-      const { opacity, rotateX, translateY } = cardPhase(local);
-      card.style.opacity = opacity;
-      card.style.transform = `perspective(1200px) translateY(${translateY}px) rotateX(${rotateX}deg)`;
-      card.style.zIndex = i + 1;
-    });
+    if (scrolled < 0 || scrolled > range) {
+      hideStage();
+    } else {
+      stage.style.opacity = "1";
+      stage.style.visibility = "visible";
+      stage.style.pointerEvents = "auto";
+
+      const progress = clamp01(scrolled / range);
+      if (!ready) cards.forEach((card) => { card.style.transition = "none"; });
+      applyCards(progress);
+      if (!ready) {
+        void stage.offsetWidth; // force le rendu de la frame sans transition avant de la réactiver
+        cards.forEach((card) => { card.style.transition = ""; });
+        ready = true;
+      }
+    }
+
+    rafId = requestAnimationFrame(frame);
   }
 
-  return { update };
+  function start() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+    if (!resolveEls()) {
+      setTimeout(start, 150);
+      return;
+    }
+    ready = false;
+    rafId = requestAnimationFrame(frame);
+  }
+
+  start();
+  return { start };
 }
 
 /* ---------- About : animation d'entrée rejouable ---------- */
