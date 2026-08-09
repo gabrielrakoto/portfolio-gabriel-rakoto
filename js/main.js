@@ -120,7 +120,6 @@ function buildProjectsPageCards() {
     const svcCount = I18N.fr.projects[i].services.length;
     return `
     <div class="projpage-card" data-card-index="${i}">
-      ${buildCardTicker(I18N.fr.projects[i].title)}
       <div class="projpage-card-inner">
         <div class="projpage-copy">
           <div class="projpage-niche" data-i18n="projects.${i}.niche"></div>
