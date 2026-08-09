@@ -751,6 +751,8 @@ h1, h2, h3, p { margin: 0; }
   opacity: 0;
 }
 .projpage-card-inner {
+  position: relative;
+  z-index: 1;
   width: min(1100px, 92vw);
   max-height: 88vh;
   background: var(--c-bg-soft);

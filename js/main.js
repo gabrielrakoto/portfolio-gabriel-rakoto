@@ -77,8 +77,9 @@ function buildServicesPageCards() {
   }).join("");
 }
 
-function buildProjectTicker() {
-  return I18N.fr.projects.map((p) => p.title.toUpperCase()).join("&nbsp;&nbsp;&nbsp;◈&nbsp;&nbsp;&nbsp;") + "&nbsp;&nbsp;&nbsp;◈&nbsp;&nbsp;&nbsp;";
+function buildCardTicker(title) {
+  const text = `${title.toUpperCase()}&nbsp;&nbsp;&nbsp;◈&nbsp;&nbsp;&nbsp;`;
+  return `<div class="stack-ticker"><div class="stack-ticker-track"><span>${text}</span><span>${text}</span></div></div>`;
 }
 
 function buildHomeProjectCards() {
@@ -88,6 +89,7 @@ function buildHomeProjectCards() {
     const svcCount = I18N.fr.projects[i].services.length;
     return `
     <div class="proj-stacked-card" data-card-index="${i}">
+      ${buildCardTicker(I18N.fr.projects[i].title)}
       <div class="proj-card-wrap">
         <div class="proj-card-head">
           <span class="proj-tag" data-i18n="projects.${i}.tag"></span>
@@ -106,8 +108,7 @@ function buildHomeProjectCards() {
       </div>
     </div>`;
   }).join("");
-  const tickerText = buildProjectTicker();
-  stage.innerHTML = `<div class="stack-ticker"><div class="stack-ticker-track"><span>${tickerText}</span><span>${tickerText}</span></div></div>` + cardsHtml;
+  stage.innerHTML = cardsHtml;
 }
 
 function buildProjectsPageCards() {
@@ -117,6 +118,7 @@ function buildProjectsPageCards() {
     const svcCount = I18N.fr.projects[i].services.length;
     return `
     <div class="projpage-card" data-card-index="${i}">
+      ${buildCardTicker(I18N.fr.projects[i].title)}
       <div class="projpage-card-inner">
         <div class="projpage-copy">
           <div class="projpage-niche" data-i18n="projects.${i}.niche"></div>
@@ -131,8 +133,7 @@ function buildProjectsPageCards() {
       </div>
     </div>`;
   }).join("");
-  const tickerText = buildProjectTicker();
-  stage.innerHTML = `<div class="stack-ticker"><div class="stack-ticker-track"><span>${tickerText}</span><span>${tickerText}</span></div></div>` + cardsHtml;
+  stage.innerHTML = cardsHtml;
 }
 
 /* ---------- i18n ---------- */
