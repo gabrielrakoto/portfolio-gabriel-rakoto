@@ -946,8 +946,35 @@ h1, h2, h3, p { margin: 0; }
   .nav-burger { display: flex; }
   .nav-mobile-actions { display: flex; }
 
-  .hero-title { max-width: 86%; font-size: clamp(22px, 6vw, 32px); }
-  .hero-card { max-width: 160px; }
+  .hero-sec {
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: clamp(24px, 8vh, 48px) var(--pad-x) 48px;
+    gap: 24px;
+  }
+  .hero-badge { position: relative; top: auto; left: auto; order: 1; }
+  .hero-title {
+    position: relative;
+    top: auto; left: auto; transform: none;
+    max-width: 100%;
+    font-size: clamp(22px, 6vw, 32px);
+    order: 2;
+  }
+  .hero-card {
+    position: relative;
+    bottom: auto; right: auto;
+    max-width: 100%;
+    text-align: left;
+    order: 3;
+  }
+  .hero-card-tag { justify-content: flex-start; }
+  .hero-card-lines { text-align: left; }
+  .hero-cta-wrap { position: relative; bottom: auto; left: auto; order: 4; }
+  #gr-canvas { transform: translateY(42%) scale(0.62); pointer-events: none; }
 
   .about-stats { grid-template-columns: 1fr; gap: 20px; }
 
