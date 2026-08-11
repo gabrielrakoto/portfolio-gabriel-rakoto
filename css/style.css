@@ -975,7 +975,7 @@ h1, h2, h3, p { margin: 0; }
   .hero-card-tag { justify-content: flex-start; }
   .hero-card-lines { text-align: left; }
   .hero-cta-wrap { position: relative; bottom: auto; left: auto; order: 4; }
-  #gr-canvas { transform: translateY(26%) scale(0.6); pointer-events: none; }
+  #gr-canvas { transform: translateY(-36%); filter: brightness(8); pointer-events: none; }
 
   .about-stats { grid-template-columns: 1fr; gap: 20px; }
 

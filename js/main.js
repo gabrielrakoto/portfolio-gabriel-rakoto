@@ -234,25 +234,61 @@ function initNavScroll() {
   onScroll();
 }
 
-/* ---------- Stacked scroll reveal (boucle rAF autonome, factorisé Home + Projects) ---------- */
-function cardPhase(local, isFirst) {
+/* ---------- Stacked scroll reveal (boucle rAF autonome) ---------- */
+/* Page Projets : simple translateY + fondu. */
+function cardPhaseFlat(local, isFirst) {
   if (local < -0.32 || local > 1.02) {
-    return { opacity: 0, translateY: 0, zIndex: 0, interactive: false };
+    return { opacity: 0, transform: "none", zIndex: 0, interactive: false };
   }
   const entryEnd = isFirst ? 0.3 : 0;
   if (local < entryEnd) {
     const entryStart = isFirst ? 0 : -0.3;
     const p = easeOutCubic(clamp01((local - entryStart) / (entryEnd - entryStart)));
-    return { opacity: clamp01(p * 1.5), translateY: lerp(44, 0, p), zIndex: 2, interactive: true };
+    const ty = lerp(44, 0, p);
+    return { opacity: clamp01(p * 1.5), transform: ty === 0 ? "none" : `translateY(${ty}px)`, zIndex: 2, interactive: true };
   }
   if (local >= 0.7) {
     const p = easeOutQuad(clamp01((local - 0.7) / 0.3));
-    return { opacity: clamp01(1 - p * 1.3), translateY: lerp(0, -44, p), zIndex: 1, interactive: true };
+    const ty = lerp(0, -44, p);
+    return { opacity: clamp01(1 - p * 1.3), transform: ty === 0 ? "none" : `translateY(${ty}px)`, zIndex: 1, interactive: true };
   }
-  return { opacity: 1, translateY: 0, zIndex: 2, interactive: true };
+  return { opacity: 1, transform: "none", zIndex: 2, interactive: true };
 }
 
-function createStackedReveal({ spacerId, stageId, cardSelector, pageKey }) {
+/* Accueil : bascule 3D — la carte se relève depuis le bas (rotateX 55°→0°), tient le plateau,
+   puis se rabat vers l'avant (rotateX 0°→-80°) pendant que la suivante se lève derrière elle. */
+function cardPhase3D(local, isFirst) {
+  if (local < -0.37 || local > 1.02) {
+    return { opacity: 0, transform: "none", zIndex: 0, interactive: false };
+  }
+  const riseStart = isFirst ? 0 : -0.35;
+  const riseEnd = isFirst ? 0.35 : 0;
+  if (local < riseEnd) {
+    const p = easeOutCubic(clamp01((local - riseStart) / (riseEnd - riseStart)));
+    const rotateX = lerp(55, 0, p);
+    const scale = lerp(0.92, 1, p);
+    return {
+      opacity: clamp01(p * 1.5),
+      transform: `perspective(900px) rotateX(${rotateX}deg) scale(${scale})`,
+      zIndex: isFirst ? 2 : 1,
+      interactive: true,
+    };
+  }
+  if (local < 0.65) {
+    return { opacity: 1, transform: "none", zIndex: 2, interactive: true };
+  }
+  const p = easeOutQuad(clamp01((local - 0.65) / 0.35));
+  const rotateX = lerp(0, -80, p);
+  const scale = lerp(1, 0.92, p);
+  return {
+    opacity: clamp01(1 - p * 1.3),
+    transform: `perspective(900px) rotateX(${rotateX}deg) scale(${scale})`,
+    zIndex: 3,
+    interactive: true,
+  };
+}
+
+function createStackedReveal({ spacerId, stageId, cardSelector, pageKey, phaseFn = cardPhaseFlat }) {
   let spacer = null;
   let stage = null;
   let cards = [];
@@ -278,8 +314,8 @@ function createStackedReveal({ spacerId, stageId, cardSelector, pageKey }) {
   function applyCards(progress) {
     cards.forEach((card, i) => {
       const local = (progress - i * perCard) / perCard;
-      const ph = cardPhase(local, i === 0);
-      card.style.transform = ph.translateY === 0 ? "none" : `translateY(${ph.translateY}px)`;
+      const ph = phaseFn(local, i === 0);
+      card.style.transform = ph.transform;
       card.style.opacity = ph.opacity;
       card.style.zIndex = ph.zIndex;
       card.style.pointerEvents = ph.interactive ? "auto" : "none";
@@ -509,8 +545,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCardReveal();
   setupGlitch();
 
-  const homeReveal = createStackedReveal({ spacerId: "proj-scroll-spacer", stageId: "proj-stage", cardSelector: ".proj-stacked-card", pageKey: "home" });
-  const projectsReveal = createStackedReveal({ spacerId: "projpage-scroll-spacer", stageId: "projpage-stage", cardSelector: ".projpage-card", pageKey: "projects" });
+  const homeReveal = createStackedReveal({ spacerId: "proj-scroll-spacer", stageId: "proj-stage", cardSelector: ".proj-stacked-card", pageKey: "home", phaseFn: cardPhase3D });
+  const projectsReveal = createStackedReveal({ spacerId: "projpage-scroll-spacer", stageId: "projpage-stage", cardSelector: ".projpage-card", pageKey: "projects", phaseFn: cardPhaseFlat });
   stackedRevealModules = [homeReveal, projectsReveal].filter(Boolean);
 
   initNavScroll();
