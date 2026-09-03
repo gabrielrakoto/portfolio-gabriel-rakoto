@@ -1,9 +1,8 @@
 /* Bootstrap, état global, navigation, i18n, reveals, glitch, formulaire. */
 
-const state = { page: "home", lang: "fr", menuOpen: false };
+const state = { lang: "fr", menuOpen: false };
 
 let closeMobileMenu = function () {};
-let stackedRevealModules = [];
 
 /* ---------- Helpers ---------- */
 function clamp01(v) { return Math.min(1, Math.max(0, v)); }
@@ -74,7 +73,7 @@ function buildServicesPageCards() {
       <ul class="svc-page-points">
         ${Array.from({ length: pointsCount }, (_, j) => `<li data-i18n="services.${i}.points.${j}"></li>`).join("")}
       </ul>
-      <button type="button" class="btn btn-secondary" data-goto="contact" data-i18n="servicesCta"></button>
+      <a href="contact.html" class="btn btn-secondary" data-i18n="servicesCta"></a>
     </div>`;
   }).join("");
 }
@@ -183,29 +182,6 @@ function wireLangToggle() {
   });
 }
 
-/* ---------- Navigation / changement de page ---------- */
-function setPage(page, opts) {
-  opts = opts || {};
-  state.page = page;
-
-  document.querySelectorAll(".page-section").forEach((sec) => {
-    sec.classList.toggle("is-active", sec.id === "page-" + page);
-  });
-  document.querySelectorAll(".nav-link[data-goto]").forEach((el) => {
-    el.classList.toggle("is-current", el.dataset.goto === page);
-  });
-
-  closeMobileMenu();
-  if (!opts.skipScroll) window.scrollTo({ top: 0, behavior: "auto" });
-  stackedRevealModules.forEach((m) => m.start());
-}
-
-function wireNavigation() {
-  document.querySelectorAll("[data-goto]").forEach((el) => {
-    el.addEventListener("click", () => setPage(el.dataset.goto));
-  });
-}
-
 function wireMobileMenu() {
   const menu = document.querySelector(".mobile-menu");
   const openBtn = document.querySelector(".js-menu-open");
@@ -308,7 +284,7 @@ function cardPhase3D(local, isFirst) {
   };
 }
 
-function createStackedReveal({ spacerId, stageId, cardSelector, pageKey, phaseFn = cardPhaseFlat }) {
+function createStackedReveal({ spacerId, stageId, cardSelector, phaseFn = cardPhaseFlat }) {
   let spacer = null;
   let stage = null;
   let cards = [];
@@ -343,11 +319,6 @@ function createStackedReveal({ spacerId, stageId, cardSelector, pageKey, phaseFn
   }
 
   function frame() {
-    if (state.page !== pageKey) {
-      rafId = null; // auto-annulation : on quitte la page, pas de reschedule
-      return;
-    }
-
     const rect = spacer.getBoundingClientRect();
     const spacerH = spacer.offsetHeight;
     const viewH = window.innerHeight;
@@ -558,7 +529,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   applyLanguage(getInitialLang());
 
-  wireNavigation();
   wireLangToggle();
   wireMobileMenu();
   wireContactForm();
@@ -566,12 +536,14 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCardReveal();
   setupGlitch();
 
-  const homeReveal = createStackedReveal({ spacerId: "proj-scroll-spacer", stageId: "proj-stage", cardSelector: ".proj-stacked-card", pageKey: "home", phaseFn: cardPhase3D });
-  const projectsReveal = createStackedReveal({ spacerId: "projpage-scroll-spacer", stageId: "projpage-stage", cardSelector: ".projpage-card", pageKey: "projects", phaseFn: cardPhaseFlat });
-  stackedRevealModules = [homeReveal, projectsReveal].filter(Boolean);
+  if (document.getElementById("proj-scroll-spacer")) {
+    createStackedReveal({ spacerId: "proj-scroll-spacer", stageId: "proj-stage", cardSelector: ".proj-stacked-card", phaseFn: cardPhase3D });
+  }
+  if (document.getElementById("projpage-scroll-spacer")) {
+    createStackedReveal({ spacerId: "projpage-scroll-spacer", stageId: "projpage-stage", cardSelector: ".projpage-card", phaseFn: cardPhaseFlat });
+  }
 
   initNavScroll();
-  setPage("home", { skipScroll: true });
 
   if (typeof initHeroScene === "function") initHeroScene();
 });

@@ -68,9 +68,6 @@ ul { list-style: none; margin: 0; padding: 0; }
 h1, h2, h3, p { margin: 0; }
 ::selection { background: var(--c-black); color: var(--c-white); }
 
-.page-section { display: none; }
-.page-section.is-active { display: block; }
-
 /* ==========================================================================
    Boutons
    ========================================================================== */
@@ -217,7 +214,8 @@ h1, h2, h3, p { margin: 0; }
   justify-content: center;
   gap: 12px;
 }
-.mobile-menu-links button {
+.mobile-menu-links button,
+.mobile-menu-links a {
   text-align: left;
   font-family: var(--f-title);
   font-weight: 800;
@@ -227,7 +225,8 @@ h1, h2, h3, p { margin: 0; }
   letter-spacing: -1px;
   transition: transform 0.25s, color 0.25s;
 }
-.mobile-menu-links button:hover { transform: translateX(12px); color: var(--c-text-strong); }
+.mobile-menu-links button:hover,
+.mobile-menu-links a:hover { transform: translateX(12px); color: var(--c-text-strong); }
 
 /* ==========================================================================
    Hero
