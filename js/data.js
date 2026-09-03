@@ -78,7 +78,7 @@ const I18N = {
     privacyLabel: "05 — Confidentialité",
     privacy: {
       title: "Politique de\nconfidentialité.",
-      updated: "Dernière mise à jour : 31 août 2026",
+      updated: "Dernière mise à jour : 3 septembre 2026",
       sections: [
         {
           heading: "Introduction",
@@ -98,7 +98,8 @@ const I18N = {
           heading: "Renseignements personnels collectés",
           paragraphs: [
             "Formulaire de contact : lorsque vous remplissez le formulaire de contact du Site, nous recueillons votre nom, votre adresse courriel et le contenu de votre message.",
-            "Aucune autre donnée personnelle n'est recueillie automatiquement par le Site à ce jour. Le Site n'utilise actuellement aucun outil d'analytique tierce (comme Google Analytics) ni témoin (cookie) de suivi publicitaire.",
+            "Statistiques de fréquentation : le Site utilise Umami, un outil d'analytique web respectueux de la vie privée, hébergé directement par le RPRP (aucune donnée transmise à un tiers). Umami ne dépose aucun témoin (cookie) et ne permet pas d'identifier individuellement les visiteurs : les adresses IP sont anonymisées et aucune donnée n'est conservée d'une visite à l'autre. Les données recueillies (pages visitées, provenance approximative, type d'appareil) sont agrégées et ne permettent pas de vous identifier personnellement.",
+            "Le Site n'utilise aucun outil publicitaire ni témoin (cookie) de suivi publicitaire.",
             "Une seule donnée technique est conservée localement dans votre navigateur (stockage local, et non un témoin) : votre préférence de langue (français ou anglais), afin d'améliorer votre expérience lors de vos prochaines visites. Cette donnée reste sur votre appareil et n'est jamais transmise au RPRP.",
           ],
         },
@@ -285,7 +286,7 @@ const I18N = {
     privacyLabel: "05 — Privacy",
     privacy: {
       title: "Privacy\nPolicy.",
-      updated: "Last updated: August 31, 2026",
+      updated: "Last updated: September 3, 2026",
       sections: [
         {
           heading: "Introduction",
@@ -305,7 +306,8 @@ const I18N = {
           heading: "Personal information collected",
           paragraphs: [
             "Contact form: when you fill out the Site's contact form, we collect your name, email address and the content of your message.",
-            "No other personal data is automatically collected by the Site at this time. The Site does not currently use any third-party analytics tool (such as Google Analytics) or advertising tracking cookie.",
+            "Traffic statistics: the Site uses Umami, a privacy-friendly web analytics tool self-hosted by the person in charge (no data is sent to a third party). Umami does not set any cookies and cannot individually identify visitors: IP addresses are anonymized and no data is retained across visits. The data collected (pages visited, approximate origin, device type) is aggregated and cannot be used to identify you personally.",
+            "The Site does not use any advertising tool or advertising tracking cookie.",
             "One technical piece of information is stored locally in your browser (local storage, not a cookie): your language preference (French or English), to improve your experience on future visits. This data stays on your device and is never transmitted to the person in charge.",
           ],
         },
