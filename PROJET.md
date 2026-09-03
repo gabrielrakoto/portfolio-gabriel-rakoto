@@ -14,6 +14,7 @@ peut-u créer un repo git hub pour ce portofolio je m'occupe de le publier sur v
 - Formulaire de contact : reproduit à l'identique du prototype (affiche un état "envoyé" en JS, sans envoi réseau réel pour l'instant — à brancher plus tard sur un vrai service).
 - Images orphelines (`delice-de-manille.png`, `jmc-mecanique.png`) conservées dans `assets/` sans être utilisées (aucun projet correspondant affiché).
 - Poids des images projets (~1-2.8 Mo chacune) non optimisé pour l'instant — à convertir en WebP avant mise en prod pour un meilleur score de performance/SEO.
+- Mise en conformité Loi 25 (2026-08-31) : page "Politique de confidentialité" ajoutée (`page-privacy`, contenu bilingue dans `js/data.js`, RPRP = Gabriel Rakoto), lien dans le footer sur toutes les pages, case de consentement obligatoire sur le formulaire de contact. Aucune bannière de cookies nécessaire : le site n'utilise ni cookie ni analytics, seulement `localStorage` pour la préférence de langue (usage fonctionnel exempté). Français déjà confirmé comme langue par défaut (Loi 96), aucun changement requis.
 
 ## Stack choisie
 

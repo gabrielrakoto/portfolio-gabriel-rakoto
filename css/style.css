@@ -662,6 +662,17 @@ h1, h2, h3, p { margin: 0; }
   font-size: clamp(24px, 2.2vw, 32px);
 }
 .svc-page-card:hover .svc-blink { opacity: 1; animation: blink 0.9s steps(1) infinite; }
+
+/* Privacy policy page */
+.policy-updated { font-size: 13px; color: var(--c-text-muted); margin-top: 16px; }
+.policy-content { max-width: 820px; margin: 0 auto; padding: 0 var(--pad-x) var(--pad-y); }
+.policy-block { padding: 28px 0; border-top: 1px solid var(--c-border-mid); }
+.policy-block:first-child { border-top: none; }
+.policy-block h2 { font-family: var(--f-title); font-weight: 700; font-size: clamp(18px, 2vw, 22px); margin-bottom: 14px; }
+.policy-block p { font-size: 15px; line-height: 1.7; color: var(--c-text-body); }
+.policy-block p + p { margin-top: 12px; }
+.policy-link { display: inline-block; margin-top: 10px; font-size: 15px; font-weight: 500; text-decoration: underline; }
+.policy-link:hover { opacity: 0.6; }
 .svc-page-desc { font-size: 15px; color: var(--c-text-body); line-height: 1.7; margin-bottom: 24px; }
 .svc-page-sep { border: none; border-top: 1px solid var(--c-divider); margin: 24px 0; }
 .svc-page-price {
@@ -886,6 +897,19 @@ h1, h2, h3, p { margin: 0; }
 .contact-form input::placeholder,
 .contact-form textarea::placeholder { color: var(--c-text-muted); }
 .contact-form textarea { resize: vertical; min-height: 140px; }
+.contact-consent { display: flex; flex-direction: column; gap: 8px; }
+.contact-consent label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--c-text-body);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.contact-consent input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; width: 16px; height: 16px; accent-color: var(--c-black); cursor: pointer; }
+.contact-consent-link { font-size: 13px; font-weight: 500; text-decoration: underline; align-self: flex-start; transition: opacity 0.2s; }
+.contact-consent-link:hover { opacity: 0.6; }
 .contact-submit {
   align-self: flex-start;
   background: var(--c-black);
@@ -978,7 +1002,13 @@ h1, h2, h3, p { margin: 0; }
   padding-top: 24px;
   font-size: 12px;
   color: var(--c-text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
 }
+.footer-bottom-link { font-size: 12px; color: var(--c-text-muted); text-decoration: underline; transition: color 0.2s; }
+.footer-bottom-link:hover { color: var(--c-black); }
 
 /* ==========================================================================
    Responsive

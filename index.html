@@ -211,6 +211,13 @@
             <input type="text" name="name" required data-i18n-placeholder="contact.namePlaceholder">
             <input type="email" name="email" required data-i18n-placeholder="contact.emailPlaceholder">
             <textarea name="message" required data-i18n-placeholder="contact.messagePlaceholder"></textarea>
+            <div class="contact-consent">
+              <label>
+                <input type="checkbox" name="consent" required>
+                <span data-i18n="contact.consentLabel"></span>
+              </label>
+              <button type="button" class="contact-consent-link" data-goto="privacy" data-i18n="contact.consentLinkLabel"></button>
+            </div>
             <button type="submit" class="contact-submit" data-i18n="contact.submit"></button>
           </form>
           <div class="contact-success is-hidden">
@@ -240,6 +247,15 @@
     </div>
   </section>
 
+  <section id="page-privacy" class="page-section">
+    <div class="svc-page-hero">
+      <span class="page-label" data-i18n="privacyLabel"></span>
+      <h1 class="page-title" data-i18n="privacy.title"></h1>
+      <p class="policy-updated" data-i18n="privacy.updated"></p>
+    </div>
+    <div class="policy-content" id="privacy-sections"></div>
+  </section>
+
 </div>
 
 <footer class="site-footer">
@@ -266,7 +282,10 @@
       </div>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 Gabriel Rakoto · Québec, Canada</div>
+  <div class="footer-bottom">
+    <span>© 2026 Gabriel Rakoto · Québec, Canada</span>
+    <button type="button" class="footer-bottom-link" data-goto="privacy" data-i18n="footer.privacy"></button>
+  </div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r115/three.min.js"></script>

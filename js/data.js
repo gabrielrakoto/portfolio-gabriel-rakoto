@@ -36,6 +36,7 @@ const I18N = {
       tagline: "Sites web sur mesure et SEO local pour propulser votre entreprise au Québec.",
       pages: "Pages",
       contactTitle: "Contact",
+      privacy: "Politique de confidentialité",
     },
     hero: {
       badge: "SEO Local · Québec",
@@ -70,6 +71,86 @@ const I18N = {
     servicesCta: "Commencer",
     projectsCta: "Un projet en tête? Parlons-en et trouvons la meilleure approche pour votre entreprise.",
     contactLabel: "04 — Contact",
+    privacyLabel: "05 — Confidentialité",
+    privacy: {
+      title: "Politique de\nconfidentialité.",
+      updated: "Dernière mise à jour : 31 août 2026",
+      sections: [
+        {
+          heading: "Introduction",
+          paragraphs: [
+            "La présente politique de confidentialité explique comment Gabriel Rakoto, travailleur autonome offrant des services de création de sites web et de référencement local (SEO) au Québec, recueille, utilise, conserve et protège les renseignements personnels des visiteurs et clients de ce site web (le « Site »).",
+            "En utilisant ce Site, vous acceptez les pratiques décrites dans la présente politique, conformément à la Loi sur la protection des renseignements personnels dans le secteur privé (Loi 25) du Québec.",
+          ],
+        },
+        {
+          heading: "Responsable de la protection des renseignements personnels",
+          paragraphs: [
+            "Le responsable de la protection des renseignements personnels (RPRP) pour ce Site est Gabriel Rakoto, joignable à l'adresse courriel gabrielrakotor40@gmail.com.",
+            "Pour toute question, demande ou plainte concernant vos renseignements personnels, vous pouvez communiquer directement avec le RPRP à cette adresse.",
+          ],
+        },
+        {
+          heading: "Renseignements personnels collectés",
+          paragraphs: [
+            "Formulaire de contact : lorsque vous remplissez le formulaire de contact du Site, nous recueillons votre nom, votre adresse courriel et le contenu de votre message.",
+            "Aucune autre donnée personnelle n'est recueillie automatiquement par le Site à ce jour. Le Site n'utilise actuellement aucun outil d'analytique tierce (comme Google Analytics) ni témoin (cookie) de suivi publicitaire.",
+            "Une seule donnée technique est conservée localement dans votre navigateur (stockage local, et non un témoin) : votre préférence de langue (français ou anglais), afin d'améliorer votre expérience lors de vos prochaines visites. Cette donnée reste sur votre appareil et n'est jamais transmise au RPRP.",
+          ],
+        },
+        {
+          heading: "Finalités de la collecte",
+          paragraphs: [
+            "Les renseignements recueillis via le formulaire de contact sont utilisés uniquement pour répondre à votre demande, discuter d'un projet potentiel et vous recontacter au sujet des services offerts.",
+            "Aucun renseignement personnel n'est utilisé à des fins de sollicitation non liée à votre demande initiale, ni vendu, loué ou échangé à des tiers à des fins commerciales.",
+          ],
+        },
+        {
+          heading: "Consentement",
+          paragraphs: [
+            "Votre consentement explicite est requis avant l'envoi du formulaire de contact, au moyen d'une case à cocher dédiée. Vous pouvez retirer votre consentement en tout temps en communiquant avec le RPRP, sous réserve des obligations légales ou contractuelles en cours.",
+          ],
+        },
+        {
+          heading: "Conservation des renseignements",
+          paragraphs: [
+            "Les renseignements transmis via le formulaire de contact sont conservés dans la boîte courriel du RPRP pour la durée nécessaire à la gestion de la relation d'affaires, puis supprimés lorsqu'ils ne sont plus nécessaires aux fins pour lesquelles ils ont été recueillis.",
+          ],
+        },
+        {
+          heading: "Partage avec des tiers",
+          paragraphs: [
+            "Vos renseignements personnels ne sont partagés avec aucun tiers, sauf dans les cas suivants : obligation légale, ou recours à un fournisseur de services nécessaire à l'exploitation du Site (par exemple, un service d'hébergement web tel que Vercel ou Hostinger, ou un outil de prise de rendez-vous tel que Calendly, si vous choisissez de l'utiliser).",
+            "Ces fournisseurs sont tenus de protéger la confidentialité des renseignements auxquels ils ont accès, dans la stricte mesure nécessaire à la fourniture de leurs services.",
+          ],
+        },
+        {
+          heading: "Mesures de sécurité",
+          paragraphs: [
+            "Le Site est servi via une connexion chiffrée (HTTPS). L'accès à la boîte courriel recevant les demandes de contact est protégé par un mot de passe et une authentification propre au RPRP. Aucune base de données de renseignements personnels n'est hébergée par ce Site.",
+          ],
+        },
+        {
+          heading: "Vos droits",
+          paragraphs: [
+            "Conformément à la Loi 25, vous disposez des droits suivants à l'égard de vos renseignements personnels : droit d'accès, droit de rectification, droit de retrait du consentement et droit à la portabilité, le cas échéant.",
+            "Pour exercer l'un de ces droits, faites une demande écrite au RPRP à gabrielrakotor40@gmail.com. Une réponse vous sera fournie dans un délai de 30 jours suivant la réception de votre demande.",
+          ],
+        },
+        {
+          heading: "Droit de recours",
+          paragraphs: [
+            "Si vous estimez que vos droits n'ont pas été respectés, vous pouvez déposer une plainte auprès de la Commission d'accès à l'information du Québec (CAI) :",
+          ],
+        },
+        {
+          heading: "Modifications de la politique",
+          paragraphs: [
+            "Cette politique peut être mise à jour périodiquement, notamment si de nouveaux outils de collecte (par exemple, un outil d'analytique) sont ajoutés au Site. La date de dernière mise à jour est indiquée en haut de cette page.",
+          ],
+        },
+      ],
+    },
     services: [
       {
         title: "Site web professionnel",
@@ -144,6 +225,8 @@ const I18N = {
       namePlaceholder: "Votre nom",
       emailPlaceholder: "Votre email",
       messagePlaceholder: "Parlez-moi de votre projet...",
+      consentLabel: "J'accepte que mes renseignements soient utilisés pour me recontacter.",
+      consentLinkLabel: "Voir la politique de confidentialité →",
       submit: "Envoyer →",
       calendly: "📅  Réserver un appel gratuit",
       orText: "ou",
@@ -160,6 +243,7 @@ const I18N = {
       tagline: "Custom websites and local SEO to grow your business in Quebec.",
       pages: "Pages",
       contactTitle: "Contact",
+      privacy: "Privacy Policy",
     },
     hero: {
       badge: "Local SEO · Quebec",
@@ -194,6 +278,86 @@ const I18N = {
     servicesCta: "Get started",
     projectsCta: "Have a project in mind? Let's talk and find the best approach for your business.",
     contactLabel: "04 — Contact",
+    privacyLabel: "05 — Privacy",
+    privacy: {
+      title: "Privacy\nPolicy.",
+      updated: "Last updated: August 31, 2026",
+      sections: [
+        {
+          heading: "Introduction",
+          paragraphs: [
+            "This privacy policy explains how Gabriel Rakoto, a self-employed provider of website creation and local SEO services in Quebec, collects, uses, retains and protects the personal information of visitors and clients of this website (the \"Site\").",
+            "By using this Site, you accept the practices described in this policy, in accordance with Quebec's Act respecting the protection of personal information in the private sector (Law 25).",
+          ],
+        },
+        {
+          heading: "Person in charge of the protection of personal information",
+          paragraphs: [
+            "The person in charge of the protection of personal information for this Site is Gabriel Rakoto, reachable at gabrielrakotor40@gmail.com.",
+            "For any question, request or complaint regarding your personal information, you may contact this person directly at the above address.",
+          ],
+        },
+        {
+          heading: "Personal information collected",
+          paragraphs: [
+            "Contact form: when you fill out the Site's contact form, we collect your name, email address and the content of your message.",
+            "No other personal data is automatically collected by the Site at this time. The Site does not currently use any third-party analytics tool (such as Google Analytics) or advertising tracking cookie.",
+            "One technical piece of information is stored locally in your browser (local storage, not a cookie): your language preference (French or English), to improve your experience on future visits. This data stays on your device and is never transmitted to the person in charge.",
+          ],
+        },
+        {
+          heading: "Purposes of the collection",
+          paragraphs: [
+            "Information collected through the contact form is used solely to respond to your request, discuss a potential project, and follow up with you about the services offered.",
+            "No personal information is used for solicitation unrelated to your original request, nor sold, rented or exchanged with third parties for commercial purposes.",
+          ],
+        },
+        {
+          heading: "Consent",
+          paragraphs: [
+            "Your explicit consent is required before submitting the contact form, via a dedicated checkbox. You may withdraw your consent at any time by contacting the person in charge, subject to ongoing legal or contractual obligations.",
+          ],
+        },
+        {
+          heading: "Retention of information",
+          paragraphs: [
+            "Information submitted through the contact form is kept in the inbox of the person in charge for as long as necessary to manage the business relationship, then deleted once no longer needed for the purposes for which it was collected.",
+          ],
+        },
+        {
+          heading: "Sharing with third parties",
+          paragraphs: [
+            "Your personal information is not shared with any third party, except in the following cases: legal obligation, or use of a service provider necessary to operate the Site (for example, a web hosting service such as Vercel or Hostinger, or a scheduling tool such as Calendly, if you choose to use it).",
+            "These providers are required to protect the confidentiality of the information they access, strictly to the extent necessary to provide their services.",
+          ],
+        },
+        {
+          heading: "Security measures",
+          paragraphs: [
+            "The Site is served over an encrypted (HTTPS) connection. Access to the inbox receiving contact requests is protected by a password and authentication specific to the person in charge. No personal information database is hosted by this Site.",
+          ],
+        },
+        {
+          heading: "Your rights",
+          paragraphs: [
+            "In accordance with Law 25, you have the following rights regarding your personal information: right of access, right of rectification, right to withdraw consent, and right to portability, where applicable.",
+            "To exercise any of these rights, submit a written request to gabrielrakotor40@gmail.com. A response will be provided within 30 days of receiving your request.",
+          ],
+        },
+        {
+          heading: "Right of recourse",
+          paragraphs: [
+            "If you believe your rights have not been respected, you may file a complaint with the Commission d'accès à l'information du Québec (CAI):",
+          ],
+        },
+        {
+          heading: "Changes to this policy",
+          paragraphs: [
+            "This policy may be updated periodically, notably if new data-collection tools (such as an analytics tool) are added to the Site. The last update date is shown at the top of this page.",
+          ],
+        },
+      ],
+    },
     services: [
       {
         title: "Professional Website",
@@ -268,6 +432,8 @@ const I18N = {
       namePlaceholder: "Your name",
       emailPlaceholder: "Your email",
       messagePlaceholder: "Tell me about your project...",
+      consentLabel: "I agree that my information be used to contact me back.",
+      consentLinkLabel: "See privacy policy →",
       submit: "Send →",
       calendly: "📅  Book a free call",
       orText: "or",

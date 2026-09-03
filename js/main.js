@@ -137,6 +137,26 @@ function buildProjectsPageCards() {
   stage.innerHTML = cardsHtml;
 }
 
+function buildPrivacyPage() {
+  const wrap = document.getElementById("privacy-sections");
+  if (!wrap) return;
+  const sections = I18N.fr.privacy.sections;
+  wrap.innerHTML = sections.map((sec, i) => {
+    const paragraphsHtml = sec.paragraphs
+      .map((_, j) => `<p data-i18n="privacy.sections.${i}.paragraphs.${j}"></p>`)
+      .join("");
+    const caiLink = i === 9
+      ? `<a class="policy-link" href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener noreferrer">www.cai.gouv.qc.ca</a>`
+      : "";
+    return `
+    <div class="policy-block">
+      <h2 data-i18n="privacy.sections.${i}.heading"></h2>
+      ${paragraphsHtml}
+      ${caiLink}
+    </div>`;
+  }).join("");
+}
+
 /* ---------- i18n ---------- */
 function applyLanguage(lang) {
   state.lang = lang;
@@ -534,6 +554,7 @@ document.addEventListener("DOMContentLoaded", () => {
   buildServicesPageCards();
   buildHomeProjectCards();
   buildProjectsPageCards();
+  buildPrivacyPage();
 
   applyLanguage(getInitialLang());
 
