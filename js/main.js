@@ -97,7 +97,10 @@ function buildHomeProjectCards() {
           <a class="proj-visit" href="${p.url}" target="_blank" rel="noopener noreferrer" data-i18n="visit"></a>
         </div>
         <div class="proj-home-card">
-          <img class="proj-screen-bg" src="${p.img}" alt="" loading="lazy">
+          <picture style="display:contents">
+            <source srcset="${p.imgWebp}" type="image/webp">
+            <img class="proj-screen-bg" src="${p.img}" alt="Capture d'écran du site web réalisé pour ${I18N.fr.projects[i].title} — ${I18N.fr.projects[i].niche}" loading="lazy">
+          </picture>
           <div class="proj-home-info">
             <div class="proj-niche" data-i18n="projects.${i}.niche"></div>
             <div class="proj-home-title" data-i18n="projects.${i}.title"></div>
@@ -129,7 +132,10 @@ function buildProjectsPageCards() {
           </div>
           <a class="projpage-btn" href="${p.url}" target="_blank" rel="noopener noreferrer"><span data-i18n="seeProject"></span> →</a>
         </div>
-        <div class="projpage-img"><img src="${p.img}" alt="" loading="lazy"></div>
+        <div class="projpage-img"><picture style="display:contents">
+          <source srcset="${p.imgWebp}" type="image/webp">
+          <img src="${p.img}" alt="Capture d'écran du site web réalisé pour ${I18N.fr.projects[i].title} — ${I18N.fr.projects[i].niche}" loading="lazy">
+        </picture></div>
       </div>
     </div>`;
   }).join("");

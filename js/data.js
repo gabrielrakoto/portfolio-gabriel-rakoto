@@ -4,21 +4,25 @@ const PROJECTS = [
   {
     id: "tbg",
     img: "assets/paysagement-pro.jpg",
+    imgWebp: "assets/paysagement-pro.webp",
     url: "https://paysagementpro.vercel.app/",
   },
   {
     id: "kami",
     img: "assets/kami-auto-garage.jpg",
+    imgWebp: "assets/kami-auto-garage.webp",
     url: "https://kami-auto-garage.vercel.app/",
   },
   {
     id: "lotus",
     img: "assets/lotus-imperial.jpg",
+    imgWebp: "assets/lotus-imperial.webp",
     url: "https://lotusimperial.vercel.app/",
   },
   {
     id: "plomberie",
     img: "assets/plomberie-pro.jpg",
+    imgWebp: "assets/plomberie-pro.webp",
     url: "https://designhandoffplomberiepro.vercel.app/",
   },
 ];

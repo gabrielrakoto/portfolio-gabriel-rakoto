@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-gabriel-rakoto.vercel.app/sitemap.xml
