@@ -400,6 +400,10 @@ h1, h2, h3, p { margin: 0; }
   from { opacity: 0; }
   to { opacity: 1; }
 }
+@keyframes heroCanvasRevealDim {
+  from { opacity: 0; }
+  to { opacity: 0.15; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .hero-badge,
@@ -1019,11 +1023,12 @@ h1, h2, h3, p { margin: 0; }
     max-width: 100%;
     text-align: left;
     order: 3;
+    margin-top: 32px;
   }
   .hero-card-tag { justify-content: flex-start; }
   .hero-card-lines { text-align: left; }
   .hero-cta-wrap { position: relative; bottom: auto; left: auto; order: 4; }
-  #gr-canvas { transform: scale(0.6); filter: brightness(8); pointer-events: none; }
+  #gr-canvas { transform: scale(0.6); filter: brightness(8); animation: heroCanvasRevealDim 1.8s ease 0.25s both; pointer-events: none; }
 
   .svc-grid { grid-template-columns: 1fr; }
   .svc-page-grid { grid-template-columns: 1fr; }
