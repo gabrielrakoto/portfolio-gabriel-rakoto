@@ -78,7 +78,7 @@
     <h1 class="page-title" data-i18n="contact.title"></h1>
     <div class="contact-grid">
       <div>
-        <form class="contact-form" novalidate>
+        <form class="contact-form" action="https://formspree.io/f/xvzpvbep" method="POST" novalidate>
           <input type="text" name="name" required data-i18n-placeholder="contact.namePlaceholder">
           <input type="email" name="email" required data-i18n-placeholder="contact.emailPlaceholder">
           <textarea name="message" required data-i18n-placeholder="contact.messagePlaceholder"></textarea>
@@ -89,6 +89,7 @@
             </label>
             <a href="confidentialite.html" class="contact-consent-link" data-i18n="contact.consentLinkLabel"></a>
           </div>
+          <p class="contact-error is-hidden" data-i18n="contact.errorMsg"></p>
           <button type="submit" class="contact-submit" data-i18n="contact.submit"></button>
         </form>
         <div class="contact-success is-hidden">

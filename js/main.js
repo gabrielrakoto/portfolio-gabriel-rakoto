@@ -512,16 +512,35 @@ function setupGlitch() {
 function wireContactForm() {
   const form = document.querySelector(".contact-form");
   const success = document.querySelector(".contact-success");
+  const error = form ? form.querySelector(".contact-error") : null;
+  const submitBtn = form ? form.querySelector(".contact-submit") : null;
   if (!form || !success) return;
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    form.classList.add("is-hidden");
-    success.classList.remove("is-hidden");
+    if (error) error.classList.add("is-hidden");
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        form.classList.add("is-hidden");
+        success.classList.remove("is-hidden");
+      } else {
+        throw new Error("submit failed");
+      }
+    } catch (err) {
+      if (error) error.classList.remove("is-hidden");
+      if (submitBtn) submitBtn.disabled = false;
+    }
   });
 }
 

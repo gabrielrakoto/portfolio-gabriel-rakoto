@@ -921,6 +921,9 @@ h1, h2, h3, p { margin: 0; }
   transition: background 0.25s, color 0.25s, transform 0.25s;
 }
 .contact-submit:hover { background: var(--c-white); color: var(--c-black); transform: scale(1.02); box-shadow: inset 0 0 0 1.5px var(--c-black); }
+.contact-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+.contact-error { font-size: 13px; color: #c0392b; }
+.contact-error.is-hidden { display: none; }
 
 .contact-success {
   border: 1.5px solid var(--c-black);
