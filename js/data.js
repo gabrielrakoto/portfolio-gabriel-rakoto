@@ -57,11 +57,6 @@ const I18N = {
       available: "Disponible",
       bio: "Passionné par le web et le marketing local, j'accompagne les PME québécoises à construire une présence en ligne qui génère de vrais résultats. Je m'occupe du site et du référencement — vous gagnez du temps et des clients.",
       values: ["Design web", "SEO Local", "Google My Business", "Québec"],
-      stats: [
-        { value: "10+", label: "Projets livrés" },
-        { value: "3+", label: "Ans d'expérience" },
-        { value: "100%", label: "Clients locaux" },
-      ],
     },
     servicesLabel: "Services",
     projectsLabel: "Projets",
@@ -266,11 +261,6 @@ const I18N = {
       available: "Available",
       bio: "Passionate about web and local marketing, I help Quebec SMEs build an online presence that generates real results. I handle the website and SEO — you save time and gain customers.",
       values: ["Web Design", "Local SEO", "Google My Business", "Québec"],
-      stats: [
-        { value: "10+", label: "Projects delivered" },
-        { value: "3+", label: "Years of experience" },
-        { value: "100%", label: "Local clients" },
-      ],
     },
     servicesLabel: "Services",
     projectsLabel: "Projects",

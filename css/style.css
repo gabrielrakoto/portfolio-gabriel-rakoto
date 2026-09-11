@@ -518,32 +518,6 @@ h1, h2, h3, p { margin: 0; }
 }
 .about-pill.anim-in { opacity: 1; transform: translateY(0); }
 
-.about-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  border-top: 1px solid var(--c-border);
-  padding-top: 32px;
-}
-.about-stat {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.about-stat.anim-in { opacity: 1; transform: translateY(0); }
-.about-stat .value {
-  font-family: var(--f-title);
-  font-weight: 800;
-  font-size: clamp(28px, 3vw, 44px);
-  display: block;
-}
-.about-stat .label {
-  font-family: var(--f-body);
-  font-size: 13px;
-  color: var(--c-text-mid);
-  margin-top: 4px;
-}
-
 /* ==========================================================================
    Services (preview cards on Home + Services page grid)
    ========================================================================== */
@@ -1050,8 +1024,6 @@ h1, h2, h3, p { margin: 0; }
   .hero-card-lines { text-align: left; }
   .hero-cta-wrap { position: relative; bottom: auto; left: auto; order: 4; }
   #gr-canvas { transform: scale(0.6); filter: brightness(8); pointer-events: none; }
-
-  .about-stats { grid-template-columns: 1fr; gap: 20px; }
 
   .svc-grid { grid-template-columns: 1fr; }
   .svc-page-grid { grid-template-columns: 1fr; }
