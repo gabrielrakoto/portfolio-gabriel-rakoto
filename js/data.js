@@ -120,7 +120,7 @@ const I18N = {
         {
           heading: "Partage avec des tiers",
           paragraphs: [
-            "Vos renseignements personnels ne sont partagés avec aucun tiers, sauf dans les cas suivants : obligation légale, ou recours à un fournisseur de services nécessaire à l'exploitation du Site (par exemple, un service d'hébergement web tel que Vercel ou Hostinger, ou un outil de prise de rendez-vous tel que Calendly, si vous choisissez de l'utiliser).",
+            "Vos renseignements personnels ne sont partagés avec aucun tiers, sauf dans les cas suivants : obligation légale, ou recours à un fournisseur de services nécessaire à l'exploitation du Site (par exemple, un service d'hébergement web tel que Vercel ou Hostinger, ou un outil de prise de rendez-vous tel que Google Agenda, si vous choisissez de l'utiliser).",
             "Ces fournisseurs sont tenus de protéger la confidentialité des renseignements auxquels ils ont accès, dans la stricte mesure nécessaire à la fourniture de leurs services.",
           ],
         },
@@ -324,7 +324,7 @@ const I18N = {
         {
           heading: "Sharing with third parties",
           paragraphs: [
-            "Your personal information is not shared with any third party, except in the following cases: legal obligation, or use of a service provider necessary to operate the Site (for example, a web hosting service such as Vercel or Hostinger, or a scheduling tool such as Calendly, if you choose to use it).",
+            "Your personal information is not shared with any third party, except in the following cases: legal obligation, or use of a service provider necessary to operate the Site (for example, a web hosting service such as Vercel or Hostinger, or a scheduling tool such as Google Calendar, if you choose to use it).",
             "These providers are required to protect the confidentiality of the information they access, strictly to the extent necessary to provide their services.",
           ],
         },
@@ -450,5 +450,5 @@ const CONTACT_INFO = {
   phoneHref: "tel:+15819792198",
   linkedinUrl: "https://www.linkedin.com/in/gabriel-rakoto-708b39351/",
   linkedinDisplay: "gabriel-rakoto",
-  calendlyUrl: "https://calendly.com/gabriel-rakoto",
+  bookingUrl: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3y1GP9v2DiD7DIADban8mmoyKjJ_11Qxk-AaXYCBb-N4c5Ju3-izS_d6RIeUGZ8xcEi3p4Nbx0",
 };
