@@ -73,7 +73,7 @@ const I18N = {
     privacyLabel: "05 — Confidentialité",
     privacy: {
       title: "Politique de\nconfidentialité.",
-      updated: "Dernière mise à jour : 3 septembre 2026",
+      updated: "Dernière mise à jour : 1er octobre 2026",
       sections: [
         {
           heading: "Introduction",
@@ -93,6 +93,7 @@ const I18N = {
           heading: "Renseignements personnels collectés",
           paragraphs: [
             "Formulaire de contact : lorsque vous remplissez le formulaire de contact du Site, nous recueillons votre nom, votre adresse courriel et le contenu de votre message.",
+            "Prise de rendez-vous : si vous réservez un appel au moyen du lien de réservation, votre nom, votre adresse courriel et le créneau choisi sont recueillis par Google Agenda et transmis au RPRP afin de planifier l'appel.",
             "Statistiques de fréquentation : le Site utilise Umami, un outil d'analytique web respectueux de la vie privée, hébergé directement par le RPRP (aucune donnée transmise à un tiers). Umami ne dépose aucun témoin (cookie) et ne permet pas d'identifier individuellement les visiteurs : les adresses IP sont anonymisées et aucune donnée n'est conservée d'une visite à l'autre. Les données recueillies (pages visitées, provenance approximative, type d'appareil) sont agrégées et ne permettent pas de vous identifier personnellement.",
             "Le Site n'utilise aucun outil publicitaire ni témoin (cookie) de suivi publicitaire.",
             "Une seule donnée technique est conservée localement dans votre navigateur (stockage local, et non un témoin) : votre préférence de langue (français ou anglais), afin d'améliorer votre expérience lors de vos prochaines visites. Cette donnée reste sur votre appareil et n'est jamais transmise au RPRP.",
@@ -120,7 +121,8 @@ const I18N = {
         {
           heading: "Partage avec des tiers",
           paragraphs: [
-            "Vos renseignements personnels ne sont partagés avec aucun tiers, sauf dans les cas suivants : obligation légale, ou recours à un fournisseur de services nécessaire à l'exploitation du Site (par exemple, un service d'hébergement web tel que Vercel ou Hostinger, ou un outil de prise de rendez-vous tel que Google Agenda, si vous choisissez de l'utiliser).",
+            "Vos renseignements personnels ne sont partagés avec aucun tiers, sauf en cas d'obligation légale ou lorsque le recours à un fournisseur de services est nécessaire à l'exploitation du Site. Ces fournisseurs sont : Hostinger (hébergement du Site), Formspree (acheminement des messages du formulaire de contact vers la boîte courriel du RPRP) et Google Agenda (prise de rendez-vous, si vous choisissez de l'utiliser).",
+            "Certains de ces fournisseurs, notamment Formspree et Google, sont établis à l'extérieur du Québec (principalement aux États-Unis). Vos renseignements peuvent donc être communiqués et conservés à l'extérieur du Québec, auquel cas ils sont régis par les lois applicables dans ces territoires. Le RPRP s'assure que ces fournisseurs offrent une protection adéquate des renseignements personnels.",
             "Ces fournisseurs sont tenus de protéger la confidentialité des renseignements auxquels ils ont accès, dans la stricte mesure nécessaire à la fourniture de leurs services.",
           ],
         },
@@ -277,7 +279,7 @@ const I18N = {
     privacyLabel: "05 — Privacy",
     privacy: {
       title: "Privacy\nPolicy.",
-      updated: "Last updated: September 3, 2026",
+      updated: "Last updated: October 1, 2026",
       sections: [
         {
           heading: "Introduction",
@@ -297,6 +299,7 @@ const I18N = {
           heading: "Personal information collected",
           paragraphs: [
             "Contact form: when you fill out the Site's contact form, we collect your name, email address and the content of your message.",
+            "Appointment booking: if you book a call through the booking link, your name, email address and chosen time slot are collected by Google Calendar and passed on to the person in charge in order to schedule the call.",
             "Traffic statistics: the Site uses Umami, a privacy-friendly web analytics tool self-hosted by the person in charge (no data is sent to a third party). Umami does not set any cookies and cannot individually identify visitors: IP addresses are anonymized and no data is retained across visits. The data collected (pages visited, approximate origin, device type) is aggregated and cannot be used to identify you personally.",
             "The Site does not use any advertising tool or advertising tracking cookie.",
             "One technical piece of information is stored locally in your browser (local storage, not a cookie): your language preference (French or English), to improve your experience on future visits. This data stays on your device and is never transmitted to the person in charge.",
@@ -324,7 +327,8 @@ const I18N = {
         {
           heading: "Sharing with third parties",
           paragraphs: [
-            "Your personal information is not shared with any third party, except in the following cases: legal obligation, or use of a service provider necessary to operate the Site (for example, a web hosting service such as Vercel or Hostinger, or a scheduling tool such as Google Calendar, if you choose to use it).",
+            "Your personal information is not shared with any third party, except where required by law or where using a service provider is necessary to operate the Site. These providers are: Hostinger (Site hosting), Formspree (delivery of contact form messages to the inbox of the person in charge) and Google Calendar (appointment booking, if you choose to use it).",
+            "Some of these providers, notably Formspree and Google, are located outside Québec (mainly in the United States). Your information may therefore be communicated and stored outside Québec, in which case it is governed by the laws applicable in those jurisdictions. The person in charge ensures that these providers offer adequate protection of personal information.",
             "These providers are required to protect the confidentiality of the information they access, strictly to the extent necessary to provide their services.",
           ],
         },
