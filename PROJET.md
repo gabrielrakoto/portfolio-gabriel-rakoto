@@ -28,6 +28,8 @@ peut-u créer un repo git hub pour ce portofolio je m'occupe de le publier sur v
   - `<noscript>` de secours ajouté juste après `<body>` sur les 5 pages (message informant que JS est requis) — pas de duplication complète du contenu en HTML statique, jugé hors scope (décision déjà actée en 2026-09-02).
   - Testé en local (serveur `serve` + extension Chrome) : WebP chargé correctement (`currentSrc` vérifié en JS), `alt` corrects, aucune régression de layout, meta OG/Twitter/JSON-LD présents dans le DOM, aucune erreur console.
 
+- Prise de rendez-vous (2026-10-01) : l'ancien lien `calendly.com/gabriel-rakoto` renvoyait une 404 (compte inexistant). Remplacé par une page de réservation Google Agenda « Appel découverte gratuit » (30 min, Google Meet, mar. 17h-21h, jeu. 12h-21h, sam.-dim. 12h-17h, réservation 4 h à 60 jours à l'avance, conflits avec l'agenda évités). Affichée en simple lien (nouvel onglet), pas d'embed. URL publique sans `/u/0` pour fonctionner hors connexion. Politique de confidentialité mise à jour (Calendly → Google Agenda). Commit `2edebb2`.
+
 ## Stack choisie
 
 HTML/CSS/JS vanilla statique — aucun framework, aucun build. Architecture **multi-pages** (une URL réelle par page) : `index.html` (accueil), `projets.html`, `services.html`, `contact.html`, `confidentialite.html`. Fichiers partagés : `css/style.css`, `js/data.js` (données + i18n FR/EN), `js/three-scene.js` (scène 3D hero, chargée uniquement sur `index.html`), `js/main.js` (i18n, animations, formulaire — plus de routage JS). Déployable tel quel sur Vercel, compatible migration future vers un VPS Hostinger.
